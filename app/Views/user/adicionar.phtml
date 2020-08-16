@@ -1,0 +1,32 @@
+<div class="container">
+	<div class="row pb-5 px-5">
+		<form class="col" method="post" action="/usuario/salvar" id="adicionarUsuario">
+			<fieldset><legend>Info. Usuario</legend>
+				<div class="row">
+					<div class="col">
+						<div class="form-group">
+							<label for="nome">Nome</label>
+							<input type="text" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['nome'])) ? Core\Utilitarios\Sessoes::loadForm()['nome']: '' ?>" name="nome" id="nome"class="form-control form-control-sm" required="required">
+						</div>
+						<div class="form-group">
+							<label for="sobrenome">Sobresobrenome</label>
+							<input type="text" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['sobrenome'])) ? Core\Utilitarios\Sessoes::loadForm()['sobrenome']: '' ?>" name="sobrenome" id="sobrenome"class="form-control form-control-sm" required="required">
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-group">
+							<label for="email">E-mail</label>
+							<input type="email" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['email'])) ? Core\Utilitarios\Sessoes::loadForm()['email']: '' ?>" name="email" id="email"class="form-control form-control-sm" required="required">
+						</div>
+						<div class="form-group">
+							<label for="senha">Senha</label>
+							<input type="password" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['password'])) ? Core\Utilitarios\Sessoes::loadForm()['password']: '' ?>" name="senha" id="senha"class="form-control form-control-sm" required="required">
+						</div>
+					</div>
+				</div>
+				
+				<button class="btn btn-success">Continuar</button>
+			</fieldset>
+		</form>
+	</div>
+</div>

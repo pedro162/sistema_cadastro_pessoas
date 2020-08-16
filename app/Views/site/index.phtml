@@ -1,0 +1,344 @@
+<div id="demo" class="carousel slide" data-ride="carousel" align="center" style="background: #ccc; height: 10%;">
+	<ul class="carousel-indicators">
+	    <li data-target="#demo" data-slide-to="0" class="active"></li>
+	    <li data-target="#demo" data-slide-to="1"></li>
+	    <li data-target="#demo" data-slide-to="2"></li>
+	</ul>
+	<div class="carousel-inner">
+	    <div class="carousel-item active">
+	      	<img src="files/imagens/img_site/curriculo.jpeg" style=""/>
+	      	<div class="carousel-caption d-none d-md-block">
+			    <h5>Novas vagas diaria</h5>
+			    <p>Mais de 2000 empresas cadastradas</p>
+			 </div>
+	    </div>
+	    <div class="carousel-item">
+	      	<img src="files/imagens/img_site/adm_cumprimento.jpeg" style=""/>
+	      	<div class="carousel-caption d-none d-md-block">
+			    <h5>Encontre novos talentos</h5>
+			    <p>Cadastre sua empresa</p>
+			    <p><a href="#" class="btn btn-lg btn-warning">Cadastrar empresa</a></p>
+			 </div>
+	    </div>
+	    <div class="carousel-item">
+	      	<img src="files/imagens/img_site/megafone.jpeg" style=""/>
+	      	<div class="carousel-caption d-none d-md-block">
+			    <h5>Encontre seu novo emprego</h5>
+			    <p>Cadastre seu curriculo</p>
+			    <p><a href="/candidato/adicionar" class="btn btn-lg btn-warning">Cadastrar currículo</a></p>
+			 </div>
+	    </div>
+	</div>
+	<a class="carousel-control-prev" href="#demo" data-slide="prev">
+	    <span class="carousel-control-prev-icon"></span>
+	</a>
+	<a class="carousel-control-next" href="#demo" data-slide="next">
+	    <span class="carousel-control-next-icon"></span>
+	</a>
+</div>
+<div class="container-fluid py-5 px-5">
+	<div class="row">
+		<div class="col">
+			<div class="container py-5 px-5">
+				<form class="form-inline my-2 my-lg-0" id="form-pesquisa-index">
+					<div class="row" id="controls">
+						<div class="col-md col-sm-12" align="center" style="" >
+					      <input class="form-control form-control-md mb-sm-2" type="search" placeholder="cargo, area, profissão" aria-label="Search">
+					    </div>
+						 <div class="col-md col-sm-12 ml-2" align="center" style="" >
+						      <select class="form-control form-control-md mb-sm-2">
+						      	<option>Maranhão</option>
+						      	<option>São Paulo</option>
+						      </select>
+						 </div>
+						 <div class="col-md col-sm-12" align="center" style="" >
+						      <button class="btn btn-md btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					     </div>
+			      	</div>
+			    </form>	
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<div class="container" align="center">
+			    <p><a href="/candidato/adicionar" class="btn btn-lg btn-warning">Cadastrar currículo</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid py-5 px-5">
+	<div class="row">
+		<div class="col">
+			<div class="container py-5 px-5" style="background-color: #fff;">
+				<div class="row">
+					<?php 
+					if(isset($this->view->empresas) && ($this->view->empresas != false)){
+
+						for($i = 0, $registros = $this->view->empresas; !($i == count($registros)); $i++){
+					?>
+					<div class="col-md-2 col-sm-12">
+						<?=$registros[$i]->getLogo(); ?>
+					</div>
+					<?php
+							}
+						}else{
+
+							for($i = 0; !($i == 12); $i++){
+					?>
+					<div class="col-md-2 col-sm-12">
+						<?= $this->view->empresaStandard['logo'].'-'.($i+1); ?>
+					</div>
+					<?php
+							}
+						}
+					 ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid py-5 px-5 bg-light" id="vagas-mais-procuradas">
+	<div class="row py-5">
+		<div class="col">
+			<div id="vagas-mais-procuradaas" class=" container py-5 px-5" style="">
+				<div class="row">
+					<div class="col" id="msg-titulo-mais-procuradas" align="center"><b>Vagas mais procuradas</b></div>
+				</div>
+				<div class="row" id="row-vagas">
+					<?php 
+					if(isset($this->view->vagas) && ($this->view->vagas != false)){
+
+						for($i = 0, $registros = $this->view->vagas; !($i == count($registros)); $i++){
+					?>
+					<div class="col" style="">
+						<div class="row mb-2"><div class="col">Executivas (categoria)</div></div>
+						<div class="row">
+							<div class="col" align="center" style="text-align: justify;">
+								<h5 class="text-success"><strong><?= $registros[$i]->getDescricao().'-'.($i + 1);?></strong></h5>
+								<p>Empresa <?= ($i + 1); ?> </p>
+								<p><?= $registros[$i]->getDataCriacao(); ?></p>
+							</div>
+						</div>
+					</div>
+					<?php
+							}
+						}else{
+
+							for($i = 0; !($i == 3); $i++){
+					?>
+					<div class="col">
+						<div class="row mb-2"><div class="col">Executivas (categoria)</div></div>
+						<div class="row">
+							<di class="col">
+								<h4><?= $this->view->vagasStandard['cargo'].'-'.($i + 1);?></h4>
+								<p><?= $this->view->vagasStandard['empresa']; ?></p>
+								<p><?= $this->view->vagasStandard['publicacao'];?></p>
+							</di>
+						</div>
+					</div>
+					<?php
+							}
+						}
+					 ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid py-5 px-5 navbar-light alert-primary text-dark">
+	<div class="row">
+		<div class="col">
+			<div class="container py-2 px-5">
+				<div class="row" id="msg-curriculo">
+					<div class="col">
+						<img src="files/imagens/img_site/seta_direita.png" style=""/>
+						<h5 class="h1 sm-h6" style="color: #00f;">Cadastre seu curriculo</h5>
+					</div>
+					<div class="col">
+						<img src="files/imagens/img_site/seta_direita.png" style=""/>
+						<h5 class="h1 sm-h6" style="color: #00f;">Busque pelas suas vagas de interesse</h5>
+					</div>
+					<div class="col">
+						<img src="files/imagens/img_site/seta_direita.png" style=""/>
+						<h5 class="h1 sm-h6" style="color: #00f;">Candidate-se à vaga</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid py-5 px-5">
+	<div class="row">
+		<div class="col">
+			<div class="container py-5 px-5">
+				<div class="row">
+					<div class="col" align="center"><p style="font-size: 30pt;">
+						<?= number_format($this->view->totVagas, 0, ',', '.')?>
+					</p><p>Vagas de emprego</p></div>
+					<div class="col" align="center"><p style="font-size: 30pt;">
+						<?= number_format($this->view->totNovas, 0, ',', '.')?>
+					</p><p>Novas vagas</p></div>
+					<div class="col" align="center"><p style="font-size: 30pt;">
+						<?= number_format($this->view->totEmpresas, 0, ',', '.')?>
+					</p><p>Empresas cadastradas</p></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid bg-light py-5 px-5">
+	<div class="row">
+		<div class="col">
+			<div class="container py-5 px-5" style="background-color: #fff;">
+				<h3 align="center">Você de emprego novo</h3>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid px-5 navbar-light alert-primary text-dark">
+	<div class="row">
+		<div class="col">
+			<div class="container">
+				<div class="row my-2"><div class="col">Cargos mais procurados</div></div>
+				<div class="row" style="font-size: 15px;">
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+				</div>
+				<div class="row my-2"><div class="col">Buscar por cidade</div></div>
+				<div class="row" style="font-size: 15px;">
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+				</div>
+				<div class="row my-2"><div class="col">Empresas populares</div></div>
+				<div class="row" style="font-size: 15px;">
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+					<div class="col">
+						<p><a href="#">Vendedor</a></p>
+						<p><a href="#">Auxiliar de cozinha</a></p>
+						<p><a href="#">Gerente de loja</a></p>
+						<p><a href="#">Primeiro emprego</a></p>
+						<p><a href="#">Enfermeiro</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

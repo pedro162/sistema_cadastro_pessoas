@@ -1,0 +1,61 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+a:hover{
+    color: #000;
+    text-decoration: none;
+}
+
+ul{
+    list-style: none;
+}
+
+body{
+    background-color:#fff;
+    color: #000;
+}
+
+main{
+    flex: 1 0 auto;
+}
+
+/*DESABILITA TODOS OS LINKS ATÉ QUE TODA A PÁGINA SEJA CARREGADA*/
+.desable-link{
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6
+    
+}
+/* ---------------------------------- ESTILOS DO ADMIN ----------------*/
+
+#painel-index-admin{
+    width: 60%; margin: auto;
+    height: 300px;
+}
+#painel-index-admin div{
+    height: 100%;
+}
+
+/*----------------------------------OUTROS TAMANHOS DE TELA-----------------------------*/
+
+@media(max-width: 600px){
+
+    #sub-rith div{
+        display: none;
+    }
+    #menuAdminHide{
+        display: block;
+
+    }
+
+    
+}
+

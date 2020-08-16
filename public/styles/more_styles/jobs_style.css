@@ -1,0 +1,127 @@
+*{
+	box-sizing: border-box;
+}
+/* ---------------------------------- ESTILOS DO SITE ----------------*/
+#nav-home-site .nav-link{
+	height: 100%;
+	width: 100%;
+
+}
+
+div.carousel-inner .carousel-item img{
+	width: auto;height: 500px;
+}
+
+#nav-home-site .nav-link:hover{
+	background-color: rgba(0, 0,255, .3);
+	color: #fff;
+	border-radius: 4px;
+
+}
+#nav-home-site div.dropdown-menu .dropdown-item:hover{
+	background-color: rgba(0, 0,255, .3);
+	font-weight: bolder;
+	color: #fff;
+}
+
+
+.carousel-caption{
+	width: 20%; margin: auto; background-color: rgba(128,128,128, 0.6); font-weight: bolder;
+	border-radius: 4px;
+}
+
+#vagas-mais-procuradas{
+	background-image: url('../../../files/imagens/img_site/carteira_trabalho.jpeg');
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: left;
+	height: auto;
+	width: 100%;
+	margin: auto;
+}
+
+	/*desabilita os links da página ao carregar*/
+.desable-link{
+	pointer-events: none;
+	cursor: default;
+	opacity: 0.6
+	
+}
+
+/*margem do formulario de pesquisa de vaga*/
+#controls{
+	margin-left: 250px;
+
+}
+	/*configura a largura das imagens msg curriculo*/
+#msg-curriculo img{
+	width: 80%;height: 250;
+}
+	/*Confiura o tamanho do texto de mensagem de vagas mais procuradas*/
+#msg-titulo-mais-procuradas{
+	font-size: 50pt;
+}
+
+	/*configura as dimensoes do container de vaga mais procuradas*/
+#vagas-mais-procuradaas{
+	background-color: rgba(255,255,255, .9); height: auto;margin: auto;
+}
+	
+	/*form login*/
+#login{
+	width: 40%; margin: auto;
+}
+
+@media(max-width: 600px){
+	*{
+		box-sizing: border-box;
+	}
+	div.carousel-inner .carousel-item img{
+		width: 100%;height: 100%;
+	}
+	/*margem do formulario de pesquisa de vaga*/
+	#controls{
+		margin-left: 0px;
+	}
+	#controls select{
+		margin-top: 5px;
+	}
+
+	/*configura a largura das imagens msg curriculo*/
+	#msg-curriculo img{
+		width: 30%;height: auto;
+	}
+	
+	/*Confiura o tamanho do texto de mensagem de vagas mais procuradas*/
+	#msg-titulo-mais-procuradas{
+		font-size: 15pt;
+	}
+
+	/*configura as dimensoes do container de vaga mais procuradas*/
+	#vagas-mais-procuradaas{
+		background-color: rgba(255,255,255, .9); height: auto;margin: auto;
+	}
+
+	/*form login*/
+	#login{
+		width: 100%; margin: auto;
+	}
+	
+
+/* ---------------------------------- ESTILOS DO SITE ----------------*/
+
+
+/* ---------------------------------- ESTILOS DO ADMIN ----------------*/
+
+
+
+
+
+/* ---------------------------------- ESTILOS DO CANDIDATO ----------------*/
+
+
+
+
+
+/* ---------------------------------- ESTILOS DO EMPRESA ----------------*/
+}

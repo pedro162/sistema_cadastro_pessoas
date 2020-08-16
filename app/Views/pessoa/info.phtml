@@ -1,0 +1,37 @@
+<div class="container">
+	<div class="row pt-5 px-5">
+		<div class="col-md-12 px-4 col-sm-12  mb-2" style="font-size: 15px; margin: auto;" align="center">
+			<nav class="navbar navbar-expand-lg">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item mr-1">
+					        <a class="nav-link link-option desable-link alert alert-primary" id="pessoal" href="/candidato/info">Pessoais</a>
+					    </li>
+					    <li class="nav-item mr-1">
+					        <a class="nav-link link-option desable-link alert alert-secondary" id="formacao" href="/curso/adicionar">Formação</a>
+					    </li>
+					    <li class="nav-item mr-1">
+					        <a class="nav-link link-option desable-link alert alert-secondary" id="experiencia">Experiencias</a>
+					    </li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class="row pb-5 px-5" align="center">
+		<div class="col"><h2>Info. pessoais</h2></div>
+	</div>
+	<div class="row pb-5 px-5" align="center" >
+		<div class="col-md-6 col-sm-12" align="right">
+			<p align="right"><img src="../files/imagens/perfil/<?=$this->view->registro[0]->getImg();?>"></p>	
+		</div>
+		<div class="col-md-6 col-sm-12" align="left">
+			<p>Nome: <?=$this->view->registro[0]->getNome();?></p>
+			<p>Sobrenome: <?=$this->view->registro[0]->getSobrenome();?></p>
+			<p>CPF: <?=$this->view->registro[0]->getCpf();?></p>
+			<p>Sexo: <?=$this->view->registro[0]->getSexo() == 'f' ? 'Feminino' : 'Masculino';?></p>
+			<p>Nascimento: <?=$this->view->registro[0]->getDtNascimento();?></p>
+			<p><a href="#" class="btn btn-md btn-outline-primary">Editar</a></p>
+		</div>
+	</div>
+</div>

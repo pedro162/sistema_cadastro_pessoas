@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../styles/bootstrap-4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/bootstrap-4/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="../styles/more_styles/admin_style.css">
+    <link rel="stylesheet" href="../fontawesome/css/all.css">
+    <link rel="stylesheet" href="../jquery/jquery-ui/jquery-ui.min.css">
+    <link rel="manifest" href="../manifest.json">
+        <!-- CODELAB: Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    
+    <script src="../jquery/jquery.min_google.js"></script>
+    <script src="../jquery/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../styles/bootstrap-4/js/bootstrap.min.js"></script>
+    <script src="../fontawesome/js/all.js"></script>
+    <script type="text/javascript" src='https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js'></script>
+    <script src="../js/paginasJs.js"></script>
+    <script src="../js/jobs.js"></script>
+    <script src="../js/jsApplication.js"></script>
+
+    <script src="../ajax/pagseguro.js"></script>
+    <script type="text/javascript" src="../js/bibliotecas/chart.js"></script>
+    <title>Minha-Loja.com</title>
+</head>
+<body>
+    <header>
+      <?php $this->loadMenu(); ?>
+      
+    </header>
+     <?php
+        $msg = Core\Utilitarios\Sessoes::getMessage();
+
+        if($msg){
+      ?>
+      <section style="" id="section-response">
+        <div class="container-fluid">
+          <div class="row">
+              <div class="col alert alert-<?=$msg[1]?> alert-dismissible fadeshow" id="msg-response" align="center" style="">
+                <button class="close" data-dismiss = 'alert'>&times</button>
+                <?=$msg[2]?>
+              </div>
+          </div>
+        </div>
+      </section>
+      <?php 
+
+        }else{
+
+      ?>
+        <section style="display: none;" id="section-response">
+        <div class="container-fluid">
+          <div class="row">
+              <div class="col alert alert-dismissible fadeshow" id="msg-response" align="center" style="">
+              </div>
+          </div>
+        </div>
+      </section>
+
+      <?php
+        }
+      ?>
+    <section class="" style="">
+      <main class="">
+        <div class="container" id="corpo-principal">
+          
+          <?php $this->content($view_path); ?>
+
+        </div>
+      </main>
+    </section>
+    <footer style="position: absolute;">
+
+      <?php $this->loadFooter(); ?>
+
+  
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog modal-sm modal-lg modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+          
+          <div class="modal-header">
+            <h4 class="modal-title">Modal Heading</h4>
+            <button type="button" class="close" data-dismiss="modal" id="closeModal">&times;</button>
+          </div>
+
+          
+          <div class="modal-body">
+            Modal body..
+          </div>
+          <div class="modal-footer">
+            
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    </footer>
+  </body>
+</html>
