@@ -74,12 +74,46 @@ $(document).ready(function(){
 
     })
 
-
+   /**
+   *
+   * Chama moal para cadastrar logradouro
+   */
    $('body').delegate('button#adicionar-logradouro', 'click', function(ev){
 
       try{
 
-          LogradouroController.index();
+          LogradouroController.index(null, 'logradouroCandidato');
+
+
+        }catch(e){
+
+          BaseController.responseMensage(['msg', 'warning', e.message])
+
+          //cancela a submissao do formulario
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+     
+
+     
+   })
+
+   /**
+   *
+   * Chama mocal para cadastrar logradouro painel pessoa
+   */
+   $('body').delegate('button#adicionar-logradouro-painel', 'click', function(ev){
+
+      try{
+          let url = $('body').find('a#pessoal').attr('href');
+          let id = url.split('=')[1];
+
+          if(id <= 0){
+            throw new Error('Algo errado aconteceu, recarrege a página.')
+          }
+
+          LogradouroController.index('/logradouro/salvar', 'logradouro-painel', id);
+          
 
 
         }catch(e){
@@ -201,6 +235,62 @@ $(document).ready(function(){
 
 
       }catch(e){
+        console.log(e.message)
+        if($('#myModal').find('#msg-modal')){
+          $('#myModal').find('#msg-modal').remove();
+        }
+
+        formulario.parent().prepend('<div class="row" id="msg-modal"><div align="center" class="col alert alert-warning h3">'+e.message+'</div></div>')
+
+      }
+    
+   })
+
+   /*
+    Adiciona o logradouro painel pessoa
+   */
+   $('body').delegate('#logradouro-painel', 'submit', function(ev){
+    
+    
+    let formulario = $(this); 
+
+    try{
+
+
+        let estado      = formulario.find('input[name=estado]').val();
+        let cidade      = formulario.find('input[name=cidade]').val();
+        let bairro      = formulario.find('input[name=bairro]').val();
+        let endereco    = formulario.find('input[name=endereco]').val();
+        let complemento = formulario.find('input[name=complemento]').val();
+        let tipo        = formulario.find('select[name=tipo]').val();
+        let numero      = formulario.find('input[name=numero]').val();
+
+        let tr_edit      = formulario.find('input[name=tr-edit]').val();
+
+        let logradouro = new Logradouro();
+
+        logradouro.setEstado(estado);
+        logradouro.setCidade(cidade);
+        logradouro.setBairro(bairro);
+        logradouro.setEndereco(endereco);
+        logradouro.setComplemento(complemento);
+        logradouro.setTipo(tipo);
+        logradouro.setNumero(numero);
+        
+        let errors = logradouro.getErros();
+
+
+        if(errors.length > 0){
+            throw new Error(errors);
+        }
+
+        
+      }catch(e){
+
+        //cancela a submissao do formulario
+        ev.preventDefault();
+        ev.stopPropagation();
+
         console.log(e.message)
         if($('#myModal').find('#msg-modal')){
           $('#myModal').find('#msg-modal').remove();
@@ -447,11 +537,12 @@ class LogradouroController extends BaseController{
 
   }
 
-  static index(){
+  static index(url=null, id=null, idPessoa=null){
 
       let form = ` 
-      <form class="col" method="post" action="#" id="logradouroCandidato">
+      <form class="col" method="post" action="${url? url: '#'}" id="${id}">
         <fieldset>
+        <input type="hidden" name="pessoa" value="${idPessoa? idPessoa: ''}">
           <div class="row">
               <div class="col">
                 <div class="form-group">
@@ -495,8 +586,8 @@ class LogradouroController extends BaseController{
                 </div>
               </div>
             </div>
-            <button class="btn btn-success mb-2" type="submit">adicionar</button>
-            <button class="btn btn-danger mb-2 class="close" data-dismiss="modal" " type="button" >Cancelar</button>
+            <button class="btn btn-sm  mb-2 btn-outline-success" type="submit">adicionar</button>
+            <button class="btn btn-sm  btn-outline-danger mb-2" data-dismiss="modal" " type="button" >Cancelar</button>
           <fieldset>
         </form>`;
 

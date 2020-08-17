@@ -64,9 +64,8 @@ class PessoaController extends BaseController
 
             $error = ['msg', 'warning','<strong>Atenção: </strong>'.$e->getMessage()];
 
-            $this->view->result = json_encode($error);
-            $this->render('candidato/ajax', false);
             Sessoes::sendMessage($error);
+            header('Location:/pessoa/index');
         }	
     }
 
@@ -330,6 +329,63 @@ class PessoaController extends BaseController
 
     }
 
+
+    public function painel($request)
+    {
+        try {
+            
+            //busca o usuario logado
+            $usuario = Sessoes::usuarioLoad();
+            if($usuario == false){
+                header('Location:/usuario/index');
+                
+            }
+
+            Transaction::startTransaction('connection');
+            $this->setMenu('_adm/adminMenu');
+            $this->setFooter('_adm/adminFooter');
+
+            if((! isset($request['get']['cd'])) || ($request['get']['cd'] <= 0)){
+                throw new Exception('Requisição inválida');
+            }
+
+            $idPessoa = (int) $request['get']['cd'];
+
+            $pessoa = new Pessoa();
+            $dados = $pessoa->findForId($idPessoa);
+            if($dados == false){
+
+                throw new Exception("Registro não encontrado\n");
+                
+            }
+
+            
+            $this->view->dados = $dados;
+
+            $this->render('pessoa/painel', true, 'layoutAdmin');
+
+            Sessoes::clearMessage();
+
+            Transaction::close();
+
+        } catch (\PDOException $e) {
+
+            Transaction::rollback();
+
+        }catch (Exception $e){
+
+            Transaction::rollback();
+
+            $error = ['msg', 'warning','<strong>Atenção: </strong>'.$e->getMessage().'-'.$e->getLine()];
+            Sessoes::sendMessage($error);
+
+            /**
+             * Redireciona o candidato de volta ao formulario
+             */
+            header('Location:/');
+        }
+    }
+
     public function editar($request)
     {
         
@@ -383,13 +439,111 @@ class PessoaController extends BaseController
             /**
              * Redireciona o candidato de volta ao formulario
              */
-            header('Location:/pessoa/adicionar');
+            header('Location:/pessoa/painel?cd='.$idPessoa);
         }
     }
 
     public function atualizar($request)
     {
-        
+        try {
+            
+            //busca o usuario logado
+            $usuario = Sessoes::usuarioLoad();
+            if($usuario == false){
+                header('Location:/usuario/index');
+                
+            }
+
+            
+            Transaction::startTransaction('connection');
+
+            if((! isset($request['post'])) || (count($request['post']) == 0)){
+                throw new Exception('Requisição inválida');
+            }
+
+            $idUsuario = $curso = $usuario[0]->getIdUsuario();
+            $dados = $request['post'];
+
+            $pessoa = new Pessoa();
+            $pessoaLoaded = $pessoa->findForId((int) $dados['pessoa'] ?? 0);
+
+            if($pessoaLoaded == false){
+                throw new Exception("Registro não encontrado\n");
+                
+            }
+            $pessoaLoaded = $pessoaLoaded[0];
+            
+            $pessoaLoaded->setSobrenome($dados['sobrenome'] ?? '');
+            $pessoaLoaded->setCpfCnpj($dados['cpf_cnpj'] ?? '');
+            //$pessoaLoaded->setRg($dados['rg'] ?? '');
+            //$pessoaLoaded->setImg($dados['post'] ?? '');
+            //$pessoaLoaded->setDtNascimento($dados['nascimento'] ?? '');
+            $pessoaLoaded->setNome($dados['nome'] ?? '');
+            $pessoaLoaded->setSobrenome($dados['sobrenome'] ?? '');
+            $pessoaLoaded->setSexo($dados['sexo'] ?? '');
+
+            if(isset($dados['email']) && (strlen($dados['email']) > 0)){
+
+                $pessoaLoaded->setEmail($dados['email'] ?? '');
+            }
+            //$pessoaLoaded->setRgIe();
+            //$pessoaLoaded->setDtNascimento(date('Y-m-d H:i:s'));
+            $pessoaLoaded->setStatus('abilitado');
+            $pessoaLoaded->setIdUsuario($idUsuario);
+            $pessoaLoaded->setDtRegistro(date('Y-m-d H:i:s'));
+
+            $errorsPessoa = $pessoaLoaded->getErrors();
+
+            if(strlen($errorsPessoa) > 0){
+                throw new Exception($errorsPessoa);
+                
+            }
+
+
+            /**
+             * Salva as informaçoes no banco, caso esteja tudo ok
+             */
+            $resultPessoa = $pessoaLoaded->modify();
+
+            if($resultPessoa == false){
+                throw new Exception("Erro ao atualizar os dados da pessoa");
+                
+            }
+            
+             
+            Transaction::close();
+
+            /**
+             * Limpa os dados do fromulario da sessao
+             */
+            Sessoes::clearForm();
+
+            /**
+             * Exibe uma mensagem de sucesso
+             */
+            Sessoes::sendMessage(['msg', 'success', 'Dados ataualizados com sucesso!']);
+
+            /**
+             * Redireciona o candidato para o proximo formulario
+             */
+            header('Location:/pessoa/painel?cd='.(int) $dados['pessoa']);
+
+        } catch (\PDOException $e) {
+
+            Transaction::rollback();
+
+        }catch (Exception $e){
+
+            Transaction::rollback();
+
+            $error = ['msg', 'warning','<strong>Atenção: </strong>'.$e->getMessage()];
+            Sessoes::sendMessage($error);
+
+            /**
+             * Redireciona o candidato de volta ao formulario
+             */
+            header('Location:/pessoa/editar?cd='.(int) $dados['pessoa']);
+        }
     }
 
     public function adicionar()
@@ -425,6 +579,93 @@ class PessoaController extends BaseController
             $error = ['msg', 'warning','<strong>Atenção: </strong>'.$e->getMessage()];
 
             Sessoes::sendMessage($error);
+            /**
+             * Redireciona o candidato de volta ao formulario
+             */
+            header('Location:/');
+        }
+    }
+
+
+    public function deletar($request)
+    {
+        try {
+
+            //busca o usuario logado
+            $usuario = Sessoes::usuarioLoad();
+            if($usuario == false){
+                header('Location:/usuario/index');
+                
+            }
+
+            Transaction::startTransaction('connection');
+
+            if((! isset($request['get']['cd'])) || ($request['get']['cd'] <= 0)){
+                throw new Exception('Requisição inválida');
+            }
+
+            $idPessoa = (int) $request['get']['cd'];
+
+            $pessoa = new Pessoa();
+            $pessoaLoaded = $pessoa->findForId($idPessoa)[0];
+
+            $pessoaLoaded->setStatus('desabilitado');
+
+            $resultPessoa = $pessoaLoaded->modify();
+
+            if($resultPessoa == false){
+                throw new Exception("Erro ao deletar registro");
+                
+            }
+
+            $lograPess = $pessoaLoaded->pessoaLogradouro();
+
+            if($lograPess != false){
+                for ($i=0; !($i == count($lograPess) ); $i++) { 
+
+                    $lograPess[$i]->setStatus('desabilitado');
+
+                    $resultLogPess = $lograPess[$i]->modify();
+                    if($resultLogPess == false){
+
+                        throw new Exception("Erro ao deletar registro");
+                        
+                    }
+
+                    $logradouro = $lograPess[$i]->logradouro()[0];
+
+                    $logradouro->setStatus('desabilitado');
+
+                    $resultLogradouro = $logradouro->modify();
+                    if($resultLogradouro == false){
+
+                        throw new Exception("Erro ao deletar registro");
+                        
+                    }
+                }
+            }
+
+            Transaction::close();
+
+            $error = ['msg', 'success','Registro deletado com sucesso!'];
+            Sessoes::sendMessage($error);
+            header('Location:/pessoa/index');
+
+        } catch (\PDOException $e) {
+            
+            Transaction::rollback();
+
+        }catch (Exception $e){
+            
+            Transaction::rollback();
+
+            $error = ['msg', 'warning','<strong>Atenção: </strong>'.$e->getMessage()];
+            Sessoes::sendMessage($error);
+
+            /**
+             * Redireciona o candidato de volta ao formulario
+             */
+            header('Location:/pessoa/painel?cd='.(int) $idPessoa);
         }
     }
 

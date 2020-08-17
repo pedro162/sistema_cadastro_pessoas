@@ -1,6 +1,29 @@
-<div class="container" style="width: 50%; margin: auto;">
+<div class="container">
+	<div class="row px-5" style="float: right;">
+		<nav class="navbar navbar-expand-lg">
+			<ul class="navbar-nav mr-auto" >
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/" id="">Inicio</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/pessoa/index" id="">Lista de pessoas</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/pessoa/painel?cd=<?=$this->view->dados[0]->getIdPessoa();?>" id="">Painel da pessoa</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/logradouro/index?cd=<?=$this->view->dados[0]->getIdPessoa();?>">Logradouro da pessoa</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-primary" id="">Excluir pessoa</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
+<div class="container" style="width: 50%; margin: auto;clear: both;">
 	<div class="row mt-5" align="center">
-		<div class="col pb-5 px-5"><h2>Deletar Registro?</h2></div>
+		<div class="col pb-5 px-5"><h4 class="alert alert-warning">Deseja realmente Deletar este Registro?</h4></div>
 	</div>
 	<div class="row pb-5 px-5" align="center" >
 		<div class="col-md-6 p-3 col-sm-12" align="left">
@@ -31,13 +54,20 @@
 			<?php
 
 					}
+				}else{
+
+			 ?>
+			 	<p class="alert alert-warning">Nenhum endereço cadastrado!</p>
+			 	<p class="" align="center"><button class="btn btn-sm  mr-2 mb-2 btn-outline-primary" id="adicionar-logradouro-painel">Adicionar endereço</a></button>
+			 <?php
+
 				}
 			 ?>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col">
-			<p align="center"><a href="#" class="btn btn-md mr-2 mb-2 btn-outline-danger">Deletar</a><a href="/pessoa/index" class="btn btn-md mb-2 btn-outline-primary">Cancelar</a>
+		<div class="col pb-5 px-5">
+			<p align="center"><a href="/pessoa/deletar?cd=<?=$this->view->dados[0]->getIdPessoa();?>" class="btn btn-sm  mr-2 mb-2 btn-outline-danger">Deletar</a><a href="/pessoa/index" class="btn btn-sm mb-2 btn-outline-primary">Cancelar</a>
 			</p>
 		</div>
 	</div>

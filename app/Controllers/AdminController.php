@@ -36,6 +36,7 @@ class AdminController extends BaseController
             $this->render('admin/index', true, 'layoutAdmin');
             
             Transaction::close();
+            Sessoes::clearMessage();
 
         } catch (\PDOException $e) {
             

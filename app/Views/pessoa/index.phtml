@@ -1,12 +1,24 @@
-<div class="row py-5 px-5">
+<div class="row px-5" style="float: right;">
+	<nav class="navbar navbar-expand-lg">
+		<ul class="navbar-nav mr-auto" >
+			<li class="nav-item mr-1 ">
+				<a class="nav-link link-option alert alert-white" href="/" id="">Inicio</a>
+			</li>
+			<li class="nav-item mr-1 ">
+				<a class="nav-link link-option alert alert-primary" id="">Lista de pessoas</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+<div class="row py-5 px-5" style="clear: both;">
 	<div class="col-md-12 px-4 col-sm-12  mb-2">
 		<div class="row">
 			<div style="" class="col p-4 mb-2 mr-2 rounded border bg-white col-shadow" align="center">
-				<h2 class="mb-3">Lista de pessoas</h2>
+				<h2 class="mb-3">Lista de pessoa</h2>
 
 				<div class="row">
 					<div class="col" align="right">
-						<a href="/pessoa/adicionar" class="btn btn-secondary mb-2" id="adicionar-pessoa">
+						<a href="/pessoa/adicionar" class="btn btn-outline-secondary mb-2" id="adicionar-pessoa">
 							<i class="fas fa-plus-circle fa-1x"></i>
 						</a>
 					</div>
@@ -47,9 +59,9 @@
 									<td><?=$this->view->dados[$i]->getCpfCnpj();?></td>
 									<td><?=$this->view->dados[$i]->getEmail();?></td>
 									<td>
-										<a class="btn btn-sm btn-primary" href="/pessoa/visualizar?cd=<?=$this->view->dados[$i]->getIdPessoa();?>"><i class="fas fa-search-plus"></i></a>
-										<a class="btn btn-sm btn-success" href="/pessoa/editar?cd=<?=$this->view->dados[$i]->getIdPessoa();?>"><i class="fas fa-pencil-alt"></i></a>
-										<a class="btn btn-sm btn-danger" href="/pessoa/info?cd=<?=$this->view->dados[$i]->getIdPessoa();?>"><i class="fas fa-trash-alt"></i></a>
+										<a class="btn btn-sm btn-outline-primary" href="/pessoa/painel?cd=<?=$this->view->dados[$i]->getIdPessoa();?>"><i class="fas fa-search-plus"></i></a>
+										<a class="btn btn-sm btn-outline-success" href="/pessoa/editar?cd=<?=$this->view->dados[$i]->getIdPessoa();?>"><i class="fas fa-pencil-alt"></i></a>
+										<a class="btn btn-sm btn-outline-danger" href="/pessoa/info?cd=<?=$this->view->dados[$i]->getIdPessoa();?>"><i class="fas fa-trash-alt"></i></a>
 									</td>
 								</tr>
 								<?php

@@ -1,0 +1,195 @@
+<!--<div class="container">
+	<div class="row py-5 px-5">
+		<form class="col" method="post" action="/pessoa/salvar" id="adicionarCandidato">
+			<fieldset><legend class="h2">Dados pessoais</legend>
+				<div class="row">
+					<div class="col">
+						<div class="form-group">
+							<label for="nome">Nome</label>
+							<input type="text" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['nome'])) ? Core\Utilitarios\Sessoes::loadForm()['nome']: '' ?>" name="nome" id="nome"class="form-control form-control-sm" required="required">
+						</div>
+						<div class="form-group">
+							<label for="sobrenome">Sobresobrenome</label>
+							<input type="text" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['sobrenome'])) ? Core\Utilitarios\Sessoes::loadForm()['sobrenome']: '' ?>" name="sobrenome" id="sobrenome"class="form-control form-control-sm" required="required">
+						</div>
+						<div class="form-group">
+							<label for="cpf">Cpf / Cnpj</label>
+							<input type="text"  value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['cpf_cnpj'])) ? Core\Utilitarios\Sessoes::loadForm()['cpf_cnpj']: '' ?>" name="cpf_cnpj"id="cpf" class="form-control form-control-sm" required="required">
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-group">
+							<label for="sexo">Sexo</label>
+							<select name="sexo" id="sexo"class="form-control form-control-sm" required="required">
+								<option <?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['sexo']) && Core\Utilitarios\Sessoes::loadForm()['sexo'] =='m' ) ? 'selected': '' ?> value="m">Masculino</option>
+
+								<option  <?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['sexo']) && Core\Utilitarios\Sessoes::loadForm()['sexo'] =='f' ) ? 'selected': '' ?> value="f">Feminino</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="email">E-mail</label>
+							<input type="email" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['email'])) ? Core\Utilitarios\Sessoes::loadForm()['email']: '' ?>" name="email" id="email"class="form-control form-control-sm" required="required">
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label for="phone_1" required="required">Telefone 1</label>
+									<input type="tel" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['phone_1'])) ? Core\Utilitarios\Sessoes::loadForm()['phone_1']: '' ?>" name="phone_1" id="phone_1" class="form-control form-control-sm" required="required">
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label for="phone_2">Telefone 2</label>
+									<input type="tel" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['phone_2'])) ? Core\Utilitarios\Sessoes::loadForm()['phone_2']: '' ?>" name="phone_2" id="phone_2" class="form-control form-control-sm">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset><legend class="h2">Endereço</legend>
+				<div class="row">
+					<div class="col">
+						<div class="form-group">
+							<label for="estado">Sigla do estado</label>
+							<input type="text" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['estado'])) ? Core\Utilitarios\Sessoes::loadForm()['estado']: '' ?>" name="estado" id="estado"class="form-control form-control-sm" required="required">
+						</div>
+						<div class="form-group">
+							<label for="cidade">Cidade</label>
+							<input type="text" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['cidade'])) ? Core\Utilitarios\Sessoes::loadForm()['cidade']: '' ?>" name="cidade" id="cidade"class="form-control form-control-sm" required="required">
+						</div>
+						<div class="form-group">
+							<label for="bairro">Bairro</label>
+							<input type="text"  value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['bairro'])) ? Core\Utilitarios\Sessoes::loadForm()['bairro']: '' ?>" name="bairro"id="bairro" class="form-control form-control-sm" required="required">
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-group">
+							<label for="endereco">Logradouro</label>
+							<input type="text"  value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['endereco'])) ? Core\Utilitarios\Sessoes::loadForm()['endereco']: '' ?>" name="endereco"id="endereco" class="form-control form-control-sm" required="required">
+						</div>
+						<div class="form-group">
+							<label for="complemento">Complemento</label>
+							<input type="text" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['complemento'])) ? Core\Utilitarios\Sessoes::loadForm()['complemento']: '' ?>" name="complemento" id="complemento"class="form-control form-control-sm" required="required">
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label for="tipo">Tipo</label>
+									<select  name="tipo" id="tipo" class="form-control form-control-sm">
+										<option <?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['tipo'])) && Core\Utilitarios\Sessoes::loadForm()['tipo'] == 'casa' ? 'selected': '' ?> value="casa">Casa</option>
+										<option <?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['tipo'])) && Core\Utilitarios\Sessoes::loadForm()['tipo'] == 'apartamento' ? 'selected': '' ?> value="apartamento">Apartamento</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label for="numero" required="required">Número</label>
+									<input type="number" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['numero'])) ? Core\Utilitarios\Sessoes::loadForm()['numero']: '' ?>" name="numero" id="numero" class="form-control form-control-sm" required="required">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<button class="btn btn-success" type="submit">Cadastrar</button>
+			</fieldset>
+		</form>
+	</div>
+</div>-->
+
+<div class="container">
+	<div class="row px-5" style="float: right;">
+		<nav class="navbar navbar-expand-lg">
+			<ul class="navbar-nav mr-auto" >
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/" id="">Inicio</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/pessoa/index" id="">Lista de pessoas</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/pessoa/painel?cd=<?=$this->view->dados[0]->getIdPessoa();?>" id="">Logradouro da pessoa</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/logradouro/index?cd=<?=$this->view->dados[0]->getIdPessoa()?>" id="">Painel da pessoa</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-primary" id="">Editar logradouro</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<div class="row mb-2 px-5" style="clear: both;">
+		<div class="col" align="left">
+			<h2>Titular:  <?= ucwords($this->view->dados[0]->pessoa()[0]->getNome().' '.$this->view->dados[0]->pessoa()[0]->getSobrenome())?></h2>	
+		</div>
+	</div>
+	<div class="row pb-5 px-5">
+		<nav class="navbar navbar-expand-lg bg-info" style="width: 100%; align-items: center;">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item mr-1">
+				        <a class="nav-link link-option desable-link alert alert-primary" id="pessoal" href="/pessoa/painel?cd=<?=$this->view->dados[0]->pessoa()[0]->getIdPessoa();?>">Pessoais</a>
+				    </li>
+				    <li class="nav-item mr-1">
+				        <a class="nav-link link-option desable-link alert alert-primary" id="formacao" href="/logradouro/index?cd=<?=$this->view->dados[0]->pessoa()[0]->getIdPessoa();?>">Logradouro</a>
+				    </li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="row py-5 px-5">
+		<form class="col" method="post" action="/logradouro/atualizar" id="">
+        	<fieldset>
+        	<input type="hidden" name="logradouro" value="<?=$this->view->dados[0]->getIdLogradouro();?>">
+        	<input type="hidden" name="pessoa" value="<?=$this->view->dados[0]->getIdPessoa();?>">
+	          <div class="row">
+	              <div class="col">
+	                <div class="form-group">
+	                  <label for="estado">Sigla do estado</label>
+	                  <input value="<?=$this->view->dados[0]->logradouro()[0]->getEstado();?>" type="text" name="estado" id="estado"class="form-control form-control-sm" required="required">
+	                </div>
+	                <div class="form-group">
+	                  <label for="cidade">Cidade</label>
+	                  <input value="<?=$this->view->dados[0]->logradouro()[0]->getCidade();?>" type="text"  name="cidade" id="cidade"class="form-control form-control-sm" required="required">
+	                </div>
+	                <div class="form-group">
+	                  <label for="bairro">Bairro</label>
+	                  <input value="<?=$this->view->dados[0]->logradouro()[0]->getBairro();?>" type="text" name="bairro"id="bairro" class="form-control form-control-sm" required="required">
+	                </div>
+	              </div>
+	              <div class="col">
+	                <div class="form-group">
+	                  <label for="endereco">Logradouro</label>
+	                  <input value="<?=$this->view->dados[0]->logradouro()[0]->getEndereco();?>" type="text" name="endereco"id="endereco" class="form-control form-control-sm" required="required">
+	                </div>
+	                <div class="form-group">
+	                  <label for="complemento">Complemento</label>
+	                  <input value="<?=$this->view->dados[0]->logradouro()[0]->getComplemento();?>" type="text" name="complemento" id="complemento"class="form-control form-control-sm" required="required">
+	                </div>
+	                <div class="row">
+	                  <div class="col-md-6 col-sm-12">
+	                    <div class="form-group">
+	                      <label for="tipo">Tipo</label>
+	                      <select  name="tipo" id="tipo" class="form-control form-control-sm">
+	                        <option <?=($this->view->dados[0]->logradouro()[0]->getTipo() == 'casa') ? 'selected' : '';?> value="casa">Casa</option>
+	                        <option <?=($this->view->dados[0]->logradouro()[0]->getTipo() == 'apartamento') ? 'selected' : '';?> value="apartamento">Apartamento</option>
+	                      </select>
+	                    </div>
+	                  </div>
+	                  <div class="col-md-6 col-sm-12">
+	                    <div class="form-group">
+	                      <label for="numero" required="required">Número</label>
+	                      <input value="<?=$this->view->dados[0]->logradouro()[0]->getNumero()?>" type="number" name="numero" id="numero" class="form-control form-control-sm" required="required">
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+            <button class="btn btn-sm  mr-2 mb-2 btn-outline-success" type="submit">Atualizar</button>
+            <a class="btn btn-sm  mr-2 mb-2 btn-outline-danger" href="/logradouro/index?cd=<?=$this->view->dados[0]->pessoa()[0]->getIdPessoa();?>" >Cancelar</a>
+          <fieldset>
+        </form>
+	</div>
+</div>

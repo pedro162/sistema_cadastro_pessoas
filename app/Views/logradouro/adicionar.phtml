@@ -1,0 +1,50 @@
+  <form class="col" method="post" action="/logradouro/salvar" id="logradouro-painel">
+        <fieldset>
+          <input type="hidden" name="pessoa" value="">
+          <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="estado">Sigla do estado</label>
+                  <input type="text" name="estado" id="estado"class="form-control form-control-sm" required="required">
+                </div>
+                <div class="form-group">
+                  <label for="cidade">Cidade</label>
+                  <input type="text"  name="cidade" id="cidade"class="form-control form-control-sm" required="required">
+                </div>
+                <div class="form-group">
+                  <label for="bairro">Bairro</label>
+                  <input type="text" name="bairro"id="bairro" class="form-control form-control-sm" required="required">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="endereco">Logradouro</label>
+                  <input type="text" name="endereco"id="endereco" class="form-control form-control-sm" required="required">
+                </div>
+                <div class="form-group">
+                  <label for="complemento">Complemento</label>
+                  <input type="text" name="complemento" id="complemento"class="form-control form-control-sm" required="required">
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label for="tipo">Tipo</label>
+                      <select  name="tipo" id="tipo" class="form-control form-control-sm">
+                        <option value="casa">Casa</option>
+                        <option value="apartamento">Apartamento</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label for="numero" required="required">Número</label>
+                      <input type="number" name="numero" id="numero" class="form-control form-control-sm" required="required">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success mb-2" type="submit">adicionar</button>
+            <button class="btn btn-danger mb-2 class="close" data-dismiss="modal" " type="button" >Cancelar</button>
+          <fieldset>
+        </form>`

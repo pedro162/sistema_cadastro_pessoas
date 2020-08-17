@@ -1,0 +1,106 @@
+<div class="container" style="width: 100%; margin: auto;">
+	<div class="row px-5" style="float: right;">
+		<nav class="navbar navbar-expand-lg">
+			<ul class="navbar-nav mr-auto" >
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/" id="">Inicio</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/pessoa/index" id="">Lista de pessoas</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-white" href="/pessoa/painel?cd=<?=$this->view->dados[0]->getIdPessoa()?>" id="">Painel da pessoa</a>
+				</li>
+				<li class="nav-item mr-1 ">
+					<a class="nav-link link-option alert alert-primary" id="">Logradouro</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	<div class="row mb-2 px-5" style="clear: both;">
+		<div class="col" align="left">
+			<h2>Titular:  <?=$this->view->dados[0]->getNome(). ' '.$this->view->dados[0]->getSobrenome();?></h2>	
+		</div>
+	</div>
+	<div class="row mb-5 px-5">
+		<nav class="navbar navbar-expand-lg bg-info" style="width: 100%; align-items: center;">
+			<div class="" id="">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item mr-1">
+				        <a class="nav-link link-option desable-link alert alert-primary" id="pessoal" href="/pessoa/painel?cd=<?=$this->view->dados[0]->getIdPessoa();?>">Pessoais</a>
+				    </li>
+				    <li class="nav-item mr-1">
+				        <a class="nav-link link-option desable-link alert alert-primary" id="formacao" href="/logradouro/index?cd=<?=$this->view->dados[0]->getIdPessoa();?>">Logradouro</a>
+				    </li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="row py-5 px-5" align="center" >
+		<div class="col-md-12 p-3 col-sm-12" align="left">
+			<p class="h2">Logradouro
+				<button type="button" class="btn btn-primary mb-2" id="adicionar-logradouro-painel">
+					<i class="fas fa-plus-circle fa-1x"></i>
+				</button>
+			</p>
+			<div class="table-responsive">
+				<table class="table table-md table-sm table-hover" id="table-logradouro">
+	              <thead>
+	                <tr>
+	                  <th>Estado</th>
+	                  <th>Cidade</th>
+	                  <th>Bairro</th>
+	                  <th>Logradouro</th>
+	                  <th>Complemento</th>
+	                  <th>Tipo</th>
+	                  <th>Numero</th>
+	                  <th>Ação</th>
+	                </tr>
+	              </thead>  
+	              <tbody>
+	              	<?php
+	              		$logradPess = $this->view->dados[0]->pessoaLogradouro();
+
+	              		if($logradPess != false){
+	              			for($i = 0; !($i == count($logradPess)); $i++){
+
+	              	?>
+	              	<tr>
+	              		<td><?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getEstado(): '' ?>
+	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getEstado()?>">
+	              		</td>
+	              		<td><?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getCidade(): '' ?>
+	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getCidade()?>">
+	              		</td>
+	              		<td><?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getBairro(): '' ?>
+	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getBairro()?>">
+	              		</td>
+	              		<td><?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getEndereco(): '' ?>
+	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getEndereco()?>">
+	              		</td>
+	              		<td><?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getComplemento(): '' ?>
+	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getComplemento()?>">
+	              		</td>
+	              		<td><?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getTipo(): '' ?>
+	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getTipo()?>">
+	              		</td>
+	              		<td><?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getNumero(): '' ?>
+	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getNumero()?>">
+	              		</td>
+	              		<td>
+							<a class="btn btn-sm btn-outline-success" href="/logradouro/editar?cd=<?=$logradPess[$i]->getIdLogradouro().'&ps='.$this->view->dados[0]->getIdPessoa();?>"><i class="fas fa-pencil-alt"></i></a>
+							<a class="btn btn-sm btn-outline-danger" href="/logradouro/info?cd=<?=$logradPess[$i]->getIdLogradouro().'&ps='.$this->view->dados[0]->getIdPessoa();?>"><i class="fas fa-trash-alt"></i></a>
+	              		</td>
+	              	</tr>
+	              	<?php
+
+
+	              			}
+	              		}
+	              	?>
+	              </tbody>  
+	            </table>
+			</div>
+		</div>
+	</div>
+</div>
