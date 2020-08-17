@@ -134,7 +134,7 @@ class Logradouro extends BaseModel
     {
         if((! isset($this->data['cidade'])) || (strlen($this->data['cidade']) == 0)){
 
-            if(isset($this->cidade) && ($this->cidade > 0)){
+            if(isset($this->cidade) && (strlen($this->cidade) > 0)){
                 return $this->cidade;
             }
 
@@ -165,7 +165,7 @@ class Logradouro extends BaseModel
     {
         if((! isset($this->data['estado'])) || (strlen($this->data['estado']) != 2)){
 
-            if(isset($this->estado) && ($this->estado > 0)){
+            if(isset($this->estado) && (strlen($this->estado) > 0)){
                 return $this->estado;
             }
 
@@ -195,7 +195,7 @@ class Logradouro extends BaseModel
     {
         if((! isset($this->data['bairro'])) || (strlen($this->data['bairro']) == 2)){
 
-            if(isset($this->bairro) && ($this->bairro > 0)){
+            if(isset($this->bairro) && (strlen($this->bairro) > 0)){
                 return $this->bairro;
             }
 
@@ -226,7 +226,7 @@ class Logradouro extends BaseModel
     {
         if((! isset($this->data['endereco'])) || (strlen($this->data['endereco']) == 2)){
 
-            if(isset($this->endereco) && ($this->endereco > 0)){
+            if(isset($this->endereco) && (strlen($this->endereco) > 0)){
                 return $this->endereco;
             }
 
@@ -257,7 +257,7 @@ class Logradouro extends BaseModel
     {
         if((! isset($this->data['complemento'])) || (strlen($this->data['complemento']) == 2)){
 
-            if(isset($this->complemento) && ($this->complemento > 0)){
+            if(isset($this->complemento) && (strlen($this->complemento) > 0)){
                 return $this->complemento;
             }
 
@@ -288,7 +288,7 @@ class Logradouro extends BaseModel
     {
         if((! isset($this->data['numero'])) || (strlen($this->data['numero']) == 2)){
 
-            if(isset($this->numero) && ($this->numero > 0)){
+            if(isset($this->numero) && (strlen($this->numero) > 0)){
                 return $this->numero;
             }
 
@@ -318,7 +318,7 @@ class Logradouro extends BaseModel
     {
         if((! isset($this->data['tipo'])) || (strlen($this->data['tipo']) == 0)){
 
-            if(isset($this->tipo) && ($this->tipo > 0)){
+            if(isset($this->tipo) && (strlen($this->tipo) > 0)){
                 return $this->tipo;
             }
 
@@ -410,9 +410,9 @@ class Logradouro extends BaseModel
 
     public function getStatus()
     {
-        if((! isset($this->data['status'])) || ($this->data['status'] <= 0)){
+        if((! isset($this->data['status'])) || (strlen($this->data['status']) == 0)){
 
-            if(isset($this->status) && ($this->status > 0)){
+            if(isset($this->status) && (strlen($this->status) > 0)){
                 return $this->status;
             }
 

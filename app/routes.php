@@ -13,6 +13,8 @@ $routes[] = ['/pessoa/index', 'PessoaController@index'];
 $routes[] = ['/pessoa/adicionar', 'PessoaController@adicionar'];
 $routes[] = ['/pessoa/salvar', 'PessoaController@salvar'];
 $routes[] = ['/pessoa/editar', 'PessoaController@editar'];
+$routes[] = ['/pessoa/info', 'PessoaController@info'];
+$routes[] = ['/pessoa/deletar', 'PessoaController@deletar'];
 
 
 return $routes;

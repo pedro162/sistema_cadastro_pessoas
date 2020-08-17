@@ -89,7 +89,7 @@ class Pessoa extends BaseModel
 
                 [
 
-                    ['key'=>'nome', 'order'=>'asc']
+                    ['key'=>'idPessoaLogradouro', 'order'=>'asc']
 
                 ], null, null, true, false
             );

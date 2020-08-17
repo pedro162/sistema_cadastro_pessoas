@@ -51,7 +51,7 @@ class PessoaController extends BaseController
 
             $this->view->dados = $dados;
             $this->render('pessoa/index', true, 'layoutAdmin');
-            
+            Sessoes::clearMessage();
             Transaction::close();
 
         } catch (\PDOException $e) {
@@ -370,14 +370,14 @@ class PessoaController extends BaseController
             Transaction::close();
 
         } catch (\PDOException $e) {
-            
+
             Transaction::rollback();
 
         }catch (Exception $e){
 
             Transaction::rollback();
 
-            $error = ['msg', 'warning','<strong>Atenção: </strong>'.$e->getMessage()];
+            $error = ['msg', 'warning','<strong>Atenção: </strong>'.$e->getMessage().'-'.$e->getLine()];
             Sessoes::sendMessage($error);
 
             /**
@@ -428,7 +428,7 @@ class PessoaController extends BaseController
         }
     }
 
-    public function info()
+    public function info($request)
     {
 
         try {
@@ -443,14 +443,28 @@ class PessoaController extends BaseController
 
             Transaction::startTransaction('connection');
 
-            $this->setMenu('_candidato/candidatoMenu');
-            $this->setFooter('_candidato/candidatoFooter');
+            $this->setMenu('_adm/adminMenu');
+            $this->setFooter('_adm/adminFooter');
 
-            $registro = $usuario[0]->titular();
+            if((! isset($request['get']['cd'])) || ($request['get']['cd'] <= 0)){
+                throw new Exception('Requisição inválida');
+            }
 
-            $this->view->registro = $registro;
+            $idPessoa = (int) $request['get']['cd'];
 
-            $this->render('candidato/info', true, 'layoutAdmin');
+            $pessoa = new Pessoa();
+            $dados = $pessoa->findForId($idPessoa);
+            
+            if($dados == false){
+
+                throw new Exception("Registro não encontrado\n");
+                
+            }
+
+            
+            $this->view->dados = $dados;
+
+            $this->render('pessoa/info', true, 'layoutAdmin');
 
             Transaction::close();
 

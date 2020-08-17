@@ -1,37 +1,44 @@
-<div class="container">
-	<div class="row pt-5 px-5">
-		<div class="col-md-12 px-4 col-sm-12  mb-2" style="font-size: 15px; margin: auto;" align="center">
-			<nav class="navbar navbar-expand-lg">
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item mr-1">
-					        <a class="nav-link link-option desable-link alert alert-primary" id="pessoal" href="/candidato/info">Pessoais</a>
-					    </li>
-					    <li class="nav-item mr-1">
-					        <a class="nav-link link-option desable-link alert alert-secondary" id="formacao" href="/curso/adicionar">Formação</a>
-					    </li>
-					    <li class="nav-item mr-1">
-					        <a class="nav-link link-option desable-link alert alert-secondary" id="experiencia">Experiencias</a>
-					    </li>
-					</ul>
-				</div>
-			</nav>
-		</div>
-	</div>
-	<div class="row pb-5 px-5" align="center">
-		<div class="col"><h2>Info. pessoais</h2></div>
+<div class="container" style="width: 50%; margin: auto;">
+	<div class="row mt-5" align="center">
+		<div class="col pb-5 px-5"><h2>Deletar Registro?</h2></div>
 	</div>
 	<div class="row pb-5 px-5" align="center" >
-		<div class="col-md-6 col-sm-12" align="right">
-			<p align="right"><img src="../files/imagens/perfil/<?=$this->view->registro[0]->getImg();?>"></p>	
+		<div class="col-md-6 p-3 col-sm-12" align="left">
+			<p class="h2">Pessoa</p>
+			<p align="left"><strong>Nome: </strong><?=$this->view->dados[0]->getNome();?></p>
+			<p align="left"><strong>Sobrenome: </strong><?=$this->view->dados[0]->getSobrenome();?></p>
+			<p align="left"><strong>CPF: </strong><?=$this->view->dados[0]->getCpfCnpj();?></p>
+			<p align="left"><strong>Sexo: </strong><?=$this->view->dados[0]->getSexo() == 'f' ? 'Feminino' : 'Masculino';?></p>
 		</div>
-		<div class="col-md-6 col-sm-12" align="left">
-			<p>Nome: <?=$this->view->registro[0]->getNome();?></p>
-			<p>Sobrenome: <?=$this->view->registro[0]->getSobrenome();?></p>
-			<p>CPF: <?=$this->view->registro[0]->getCpf();?></p>
-			<p>Sexo: <?=$this->view->registro[0]->getSexo() == 'f' ? 'Feminino' : 'Masculino';?></p>
-			<p>Nascimento: <?=$this->view->registro[0]->getDtNascimento();?></p>
-			<p><a href="#" class="btn btn-md btn-outline-primary">Editar</a></p>
+		<div class="col-md-6 p-3 col-sm-12" align="left">
+			<p class="h2">Enderço</p>
+			<?php 
+				$logradPess = $this->view->dados[0]->pessoaLogradouro();
+
+          		if($logradPess != false){
+					for($i = 0; !($i == count($logradPess)); $i++){
+			?>
+			
+				<p><strong>Estado: </strong><?=$logradPess[$i]->logradouro()[0]->getEndereco();?></p>
+				<p><strong>Cidade: </strong><?=$logradPess[$i]->logradouro()[0]->getCidade();?></p>
+				<p><strong>Bairro: </strong><?=$logradPess[$i]->logradouro()[0]->getBairro();?></p>
+				<p><strong>Logrdouro: </strong><?=$logradPess[$i]->logradouro()[0]->getEndereco();?></p>
+				<p><strong>Complemento: </strong><?=$logradPess[$i]->logradouro()[0]->getComplemento();?></p>
+				<p><strong>Tipo: </strong><?=$logradPess[$i]->logradouro()[0]->getTipo();?></p>
+				<p><strong>Número: </strong><?=$logradPess[$i]->logradouro()[0]->getNumero();?></p>
+				<hr/>
+			
+			<?php
+
+					}
+				}
+			 ?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<p align="center"><a href="#" class="btn btn-md mr-2 mb-2 btn-outline-danger">Deletar</a><a href="/pessoa/index" class="btn btn-md mb-2 btn-outline-primary">Cancelar</a>
+			</p>
 		</div>
 	</div>
 </div>

@@ -42,6 +42,26 @@ class Utils
         return $xml;
         
     }
+
+    public static function formataCpfCnpj(String $cpfCnpj)
+    {
+        if(! $cpfCnpj){
+
+            return false;
+        }else if((strlen(trim($cpfCnpj)) != 11) && (strlen(trim($cpfCnpj)) != 14)){
+            return false;
+        }
+
+
+        $cpfCnpj = preg_replace("/\D/", '', $cpfCnpj);
+
+        if(strlen($cpfCnpj) === 11){
+
+            return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cpfCnpj);
+        }
+
+        return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cpfCnpj);
+    }
     
 
 }
