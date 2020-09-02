@@ -7,6 +7,7 @@ use App\Models\Chate;
 use App\Models\ConversaChate;
 use App\Models\Experiencia;
 use App\Models\Curso;
+use \Core\Utilitarios\Utils;
 use \Exception;
 use \InvalidArgumentException;
 
@@ -22,6 +23,7 @@ class Logradouro extends BaseModel
     private $endereco;
     private $complemento;
     private $numero;
+    private $cep;
     private $tipo;
     private $dtRegistro;
     private $idUsuario;
@@ -309,6 +311,42 @@ class Logradouro extends BaseModel
         }
 
         $this->data['numero'] = $numero;
+
+        return true;
+
+    }
+
+    public function getCep()
+    {
+        if((! isset($this->data['cep'])) || (strlen($this->data['cep']) == 2)){
+
+            if(isset($this->cep) && (strlen($this->cep) > 0)){
+                return $this->cep;
+            }
+
+            throw new Exception("Propriedade não definida\n");
+            
+        }
+
+        return $this->data['cep'];
+
+    }
+
+    public function setCep(String $cep)
+    {
+        if((! isset($cep)) || (strlen($cep) != 8)){
+
+            $this->setErrors("Cep inválida\n");
+            return false;
+        }
+
+        $cep = Utils::clearMask($cep);
+        if($cep === false){
+            $this->setErrors("Cep inválida\n");
+            return false;
+        }
+
+        $this->data['cep'] = $cep;
 
         return true;
 

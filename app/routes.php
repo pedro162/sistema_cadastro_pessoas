@@ -2,6 +2,7 @@
 $routes = [];
 
 $routes[] = ['/', 'AdminController@index'];
+$routes[] = ['/recibo', 'AdminController@recibo'];
 
 $routes[] = ['/usuario/index', 'UserController@index'];
 $routes[] = ['/usuario/logar', 'UserController@logar'];
@@ -24,6 +25,7 @@ $routes[] = ['/logradouro/atualizar', 'LogradouroController@atualizar'];
 $routes[] = ['/logradouro/salvar', 'LogradouroController@salvar'];
 $routes[] = ['/logradouro/info', 'LogradouroController@info'];
 $routes[] = ['/logradouro/deletar', 'LogradouroController@deletar'];
+$routes[] = ['/logradouro/load/cep', 'LogradouroController@loadCep'];
 
 
 return $routes;

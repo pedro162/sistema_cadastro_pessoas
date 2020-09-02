@@ -27,6 +27,30 @@ main{
     flex: 1 0 auto;
 }
 
+#container-recibo{
+    width: 70%; margin: auto;
+}
+/*
+.bg-sistema{
+    background-color: #614226;
+    
+}
+
+
+.bg-sistema ul li a{
+    color: #fff;
+    background-color: #614226;
+}
+.bg-sistema ul li a:hover, .bg-sistema a:hover{
+    color: #000;
+    background-color: #E0B87D;
+}
+.alert-primary{
+    color: #fff;
+    background-color: #614226;
+}*/
+
+
 /*DESABILITA TODOS OS LINKS ATÉ QUE TODA A PÁGINA SEJA CARREGADA*/
 .desable-link{
     pointer-events: none;
@@ -37,8 +61,7 @@ main{
 /* ---------------------------------- ESTILOS DO ADMIN ----------------*/
 
 #painel-index-admin{
-    width: 60%; margin: auto;
-    height: 300px;
+    width: 100%; margin: auto;
 }
 #painel-index-admin div{
     height: 100%;
@@ -59,3 +82,68 @@ main{
     
 }
 
+@media print{
+    *{
+        background: transparent !important;
+        color: #000 !important;
+        text-shadow: none !important;
+        filter: none !important;
+        -ms-filter: none !important;
+    }
+
+    body{
+        font: 12pt Georgia, "Times New Roman", Times, serif;
+    }
+
+    h1{
+        font-style: 24pt;
+    }
+
+    h2{
+        font-size: 18pt;
+    }
+
+    h3{
+        font-size: 14pt;
+    }
+
+    q:after{
+        content: "(" attr(cite)")";
+    }
+
+    a, a:visited{
+        text-decoration: underline;
+    }
+
+    a:link:after, a:visited:after{
+        content: "(" attr(content) ")" ;
+    }
+
+    a:after, a[href^="javascript:"]:after, a[href^="#"]:after{
+        content: "";
+    }
+
+    p a{
+        word-wrap: break-word;
+    }
+
+    form#recibo div.form-group, form#recibo button,  footer, header, div#section-response{
+        display: none;
+    }
+
+    @page{
+        margin: 0.5cm;
+    }
+
+    img{
+        max-width: 100%;
+    }
+
+    .body-recibo{
+        font-size: 18pt;
+    }
+    #container-recibo{
+        width: 100%;
+    }
+
+}

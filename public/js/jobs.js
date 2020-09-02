@@ -34,8 +34,67 @@ $(document).ready(function(){
   })
 
    /**
+   *Adiciona mascara a alguns intens
+   */
+   $('body').delegate('form input[name=cep]', 'keyup', function(ev){
+    
+     try{
+
+        $(this).mask('00.000-000')
+        
+        let cep = $(this).val().replace(/\D/g, "");
+        if(cep.length == 10){
+          LogradouroController.loadCep(cep);
+        }
+
+
+      }catch(e){
+        console.log(e.message)
+      }
+
+   })
+
+   
+  $('body').delegate('form input[name=cep]', 'select', function(){
+
+    try{
+      
+      
+    let cep = $(this).val().replace(/\D/g, "");
+    if(cep.length == 8){
+      LogradouroController.loadCep(cep, '/logradouro/load/cep');
+    }
+
+
+    }catch(e){
+      console.log(e.message)
+    }
+
+     
+  })
+
+   $('body').find('form#adicionarCandidato').find('input[name=cpf_cnpj]').mask('000.000.000-00')
+   
+   $('body').find('form#adicionarCandidato').find('input[name=phone_1]').mask('(00) 0000-00009').on('blur', function(ev){
+      if($(this).val().length == 15){
+        $('body').find('form#adicionarCandidato').find('input[name=phone_1]').mask('(00) 00000-0009')
+      }else{
+        $('body').find('form#adicionarCandidato').find('input[name=phone_1]').mask('(00) 0000-00009')
+      }
+   })
+
+   $('body').find('form#adicionarCandidato').find('input[name=phone_2]').mask('(00) 0000-00009').on('blur', function(ev){
+      if($(this).val().length == 15){
+        $('body').find('form#adicionarCandidato').find('input[name=phone_1phone_2]').mask('(00) 00000-0009')
+      }else{
+        $('body').find('form#adicionarCandidato').find('input[name=phone_2]').mask('(00) 0000-00009')
+      }
+   })
+
+
+   /**
    *
-   * Validaos dados do candidato
+   * Validaos dados da pessoa
    */ 
    $('body').delegate('form#adicionarCandidato', 'submit', function(ev){
 
@@ -73,6 +132,19 @@ $(document).ready(function(){
 
 
     })
+
+   $('body div#tipo-pessoa input:radio').on('change', function(ev){
+      let val = $(this).val();
+     
+      try{
+
+          PessoaController.tugglePesson(val);
+
+      }catch(e){
+        BaseController.responseMensage(['msg', 'warning', e.message])
+      }
+
+   })
 
    /**
    *
@@ -129,6 +201,8 @@ $(document).ready(function(){
      
    })
 
+
+
    /*
     Adiciona o logradouro ou o edita
    */
@@ -143,6 +217,7 @@ $(document).ready(function(){
         ev.preventDefault();
         ev.stopPropagation();
 
+        let cep      = formulario.find('input[name=cep]').val();
         let estado      = formulario.find('input[name=estado]').val();
         let cidade      = formulario.find('input[name=cidade]').val();
         let bairro      = formulario.find('input[name=bairro]').val();
@@ -155,6 +230,7 @@ $(document).ready(function(){
 
         let logradouro = new Logradouro();
 
+        logradouro.setCep(cep);
         logradouro.setEstado(estado);
         logradouro.setCidade(cidade);
         logradouro.setBairro(bairro);
@@ -178,6 +254,7 @@ $(document).ready(function(){
         if(tr_edit){
           $('table#table-logradouro').find('tbody tr[id='+tr_edit+']').remove();
 
+          $('form#adicionarCandidato').find('input#cep-'+tr_edit).remove();
           $('form#adicionarCandidato').find('input#estado-'+tr_edit).remove();
           $('form#adicionarCandidato').find('input#cidade-'+tr_edit).remove();
           $('form#adicionarCandidato').find('input#bairro-'+tr_edit).remove();
@@ -205,6 +282,7 @@ $(document).ready(function(){
         let idTr = lastIdTr + 1;
         
         let tr = `<tr id="${idTr}">
+                    <td>${logradouro.getCep()}</td>
                     <td>${logradouro.getEstado()}</td>
                     <td>${logradouro.getCidade()}</td>
                     <td>${logradouro.getBairro()}</td>
@@ -221,6 +299,7 @@ $(document).ready(function(){
 
 
         LogradouroController.salvar(
+            logradouro.getCep(),
             logradouro.getEstado(), logradouro.getCidade(), 
             logradouro.getBairro(), logradouro.getEndereco(),
             logradouro.getNumero(),logradouro.getTipo(),
@@ -257,6 +336,7 @@ $(document).ready(function(){
     try{
 
 
+        let cep      = formulario.find('input[name=cep]').val();
         let estado      = formulario.find('input[name=estado]').val();
         let cidade      = formulario.find('input[name=cidade]').val();
         let bairro      = formulario.find('input[name=bairro]').val();
@@ -269,6 +349,7 @@ $(document).ready(function(){
 
         let logradouro = new Logradouro();
 
+        logradouro.setCep(cep);
         logradouro.setEstado(estado);
         logradouro.setCidade(cidade);
         logradouro.setBairro(bairro);
@@ -326,6 +407,7 @@ $(document).ready(function(){
 
           logradouro.remove();
 
+          $('form#adicionarCandidato').find('input#cep-'+idTr).remove();
           $('form#adicionarCandidato').find('input#estado-'+idTr).remove();
           $('form#adicionarCandidato').find('input#cidade-'+idTr).remove();
           $('form#adicionarCandidato').find('input#bairro-'+idTr).remove();
@@ -338,6 +420,98 @@ $(document).ready(function(){
 
       }
    })
+
+
+   /**
+      Recibo de pagamento
+   */
+
+   let form_recibo = $('body #recibo');
+
+   form_recibo.find('input[name=pessoa], input[name=documento], input[name=valor], input[name=referencia]')
+   .on('keyup', function(ev){
+
+    try{
+
+      let valor = $(this).val()
+      let name = $(this).attr('name');
+      let empresa = 'Café e Cia';
+      let cnpj = '112345678912345';
+
+      switch(name){
+        case 'pessoa':
+
+          form_recibo.find('span#nome-pessoa-recebedor').html(valor)
+          form_recibo.find('span#nome-pessoa-assina').html(valor)
+
+        break;
+        case 'documento':
+
+          form_recibo.find('span#doc-pessoa-recebedor').html(valor)
+
+        break;
+        case 'valor':
+
+          let novo_valor =  Utilitarios.formatMoney(Math.abs(Number(valor)));
+
+          form_recibo.find('span#valor-ref').html(novo_valor)
+
+          let pessoa = $('input[name=pessoa]').val()
+
+          let documento = $('input[name=documento]').val()
+
+          if(valor >= 0){
+
+            form_recibo.find('span#nome-pessoa-recebedor').html(empresa)
+            form_recibo.find('span#doc-pessoa-recebedor').html(cnpj)
+            form_recibo.find('span#nome-pessoa-pagador').html(pessoa)
+            form_recibo.find('span#doc-pessoa-pagador').html(documento)
+            form_recibo.find('span#label-doc-recebedor').html('CNPJ')
+            form_recibo.find('span#label-doc-pagador').html('CPF')
+            form_recibo.find('span#vl-extenso').html(String(Math.abs(Number(valor))).extenso())
+            form_recibo.find('span#pessoa').html(empresa)
+            form_recibo.find('span#nome-pessoa-assina').html(empresa)
+
+          }else{
+            form_recibo.find('span#nome-pessoa-recebedor').html(pessoa)
+            form_recibo.find('span#doc-pessoa-recebedor').html(documento)
+            form_recibo.find('span#nome-pessoa-pagador').html(empresa)
+            form_recibo.find('span#doc-pessoa-pagador').html(cnpj)
+            form_recibo.find('span#label-doc-recebedor').html('CPF')
+            form_recibo.find('span#label-doc-pagador').html('CNPJ')
+            form_recibo.find('span#vl-extenso').html(String(Math.abs(Number(valor))).extenso())
+            form_recibo.find('span#nome-pessoa-assina').html(pessoa)
+          }
+
+        break;
+        case 'referencia':
+          form_recibo.find('span#referencia').html(valor)
+
+        break;
+      }
+
+
+    }catch(e){
+      console.log(e.message)
+    }
+    
+
+   })
+
+
+   /**  
+    *Print do recibo
+   */
+
+   $('body form#recibo').on('submit', function(ev){
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    window.print();
+
+   })
+
+
 
 
 
@@ -531,6 +705,8 @@ class LoginController extends BaseController{
 
 }
 
+//comentaro para subir para repositorio
+
 
 class LogradouroController extends BaseController{
   constructor(){
@@ -546,16 +722,24 @@ class LogradouroController extends BaseController{
           <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="estado">Sigla do estado</label>
-                  <input type="text" name="estado" id="estado"class="form-control form-control-sm" required="required">
+                 <div class="row">
+                  <div class="col">
+                     <label for="cep">Cep</label>
+                      <input type="text" name="cep" id="cep"class="form-control form-control-sm" required="required">
+                  </div>
+                  <div class="col">
+                    <label for="estado">Sigla do estado</label>
+                  <input type="text" maxLength="2" minLength="2" name="estado" id="estado"class="form-control form-control-sm" required="required">
+                  </div>
+                 </div>
                 </div>
                 <div class="form-group">
                   <label for="cidade">Cidade</label>
-                  <input type="text"  name="cidade" id="cidade"class="form-control form-control-sm" required="required">
+                  <input type="text" maxLength="100" minLength="3"   name="cidade" id="cidade"class="form-control form-control-sm" required="required">
                 </div>
                 <div class="form-group">
                   <label for="bairro">Bairro</label>
-                  <input type="text" name="bairro"id="bairro" class="form-control form-control-sm" required="required">
+                  <input type="text" maxLength="100" minLength="3"  name="bairro"id="bairro" class="form-control form-control-sm" required="required">
                 </div>
               </div>
               <div class="col">
@@ -565,7 +749,7 @@ class LogradouroController extends BaseController{
                 </div>
                 <div class="form-group">
                   <label for="complemento">Complemento</label>
-                  <input type="text" name="complemento" id="complemento"class="form-control form-control-sm" required="required">
+                  <input type="text" maxLength="200" name="complemento" id="complemento"class="form-control form-control-sm">
                 </div>
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
@@ -608,33 +792,41 @@ class LogradouroController extends BaseController{
           <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <label for="estado">Sigla do estado</label>
-                  <input value="${tr.find('td:eq(0)').text()}" type="text" name="estado" id="estado"class="form-control form-control-sm" required="required">
+                  <div class="row">
+                    <div class="col">
+                      <label for="cep">Cep</label>
+                      <input maxLength="10" minLength="10" value="${tr.find('td:eq(0)').text()}" type="text" name="cep" id="cep"class="form-control form-control-sm" required="required">
+                    </div>
+                    <div class="col">
+                      <label for="estado">Sigla do estado</label>
+                      <input maxLength="2" minLength="2" value="${tr.find('td:eq(1)').text()}" type="text" name="estado" id="estado"class="form-control form-control-sm" required="required">
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="cidade">Cidade</label>
-                  <input value="${tr.find('td:eq(1)').text()}" type="text"  name="cidade" id="cidade"class="form-control form-control-sm" required="required">
+                  <input value="${tr.find('td:eq(2)').text()}" type="text"  name="cidade" id="cidade"class="form-control form-control-sm" required="required">
                 </div>
                 <div class="form-group">
                   <label for="bairro">Bairro</label>
-                  <input value="${tr.find('td:eq(2)').text()}" type="text" name="bairro"id="bairro" class="form-control form-control-sm" required="required">
+                  <input maxLength="100" minLength="3" value="${tr.find('td:eq(3)').text()}" type="text" name="bairro"id="bairro" class="form-control form-control-sm" required="required">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group">
                   <label for="endereco">Logradouro</label>
-                  <input value="${tr.find('td:eq(3)').text()}" type="text" name="endereco"id="endereco" class="form-control form-control-sm" required="required">
+                  <input maxLength="100" minLength="3" value="${tr.find('td:eq(4)').text()}" type="text" name="endereco"id="endereco" class="form-control form-control-sm" required="required">
                 </div>
                 <div class="form-group">
                   <label for="complemento">Complemento</label>
-                  <input value="${tr.find('td:eq(4)').text()}" type="text" name="complemento" id="complemento"class="form-control form-control-sm" required="required">
+                  <input maxLength="100" minLength="3" value="${tr.find('td:eq(5)').text()}" type="text" name="complemento" id="complemento"class="form-control form-control-sm">
                 </div>
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="tipo">Tipo</label>
                       <select  name="tipo" id="tipo" class="form-control form-control-sm">
-                        <option ${tr.find('td:eq(5)').text() == 'Casa' ? 'selected': ''} value="casa">Casa</option>
+                        <option ${tr.find('td:eq(6)').text() == 'Casa' ? 'selected': ''} value="casa">Casa</option>
                         <option value="apartamento">Apartamento</option>
                       </select>
                     </div>
@@ -642,7 +834,7 @@ class LogradouroController extends BaseController{
                   <div class="col-md-6 col-sm-12">
                     <div class="form-group">
                       <label for="numero" required="required">Número</label>
-                      <input value="${tr.find('td:eq(6)').text()}" type="number" name="numero" id="numero" class="form-control form-control-sm" required="required">
+                      <input value="${tr.find('td:eq(7)').text()}" type="number" name="numero" id="numero" class="form-control form-control-sm" required="required">
                     </div>
                   </div>
                 </div>
@@ -658,7 +850,12 @@ class LogradouroController extends BaseController{
   
   }
 
-  static salvar(estado, cidade, bairro, endereco, numero, tipo, complemento, id){
+  static salvar(cep, estado, cidade, bairro, endereco, numero, tipo, complemento, id){
+
+    $('form#adicionarCandidato').append(
+      $('<input/>')
+        .attr('type', 'hidden').attr('name', 'cep[]').attr('id', 'cep-'+id).val(cep)
+      )
 
     $('form#adicionarCandidato').append(
       $('<input/>')
@@ -708,13 +905,107 @@ class LogradouroController extends BaseController{
       );
 
 
-     
-
-
-
   }
+
+  static loadCep(cep){
+
+
+    cep = Utilitarios.removeMask(cep)
+
+    if((!cep) || (cep.length == 0)){
+      throw new Error('Parâmetro inválido\n')
+    }
+
+    let form = new FormData();
+    form.append('cep', cep);
+    
+    $.ajax({
+        type:'POST',
+        url:'/logradouro/load/cep',
+        data:form,
+        processData:false,
+        contentType: false,
+        dataType:'json',
+        success:function(retorno){
+          console.log(retorno)
+
+          $('body').find('#myModal .modal-body div#msg-cep').remove()
+
+          if(( retorno.erro) && (retorno.erro == 'true')){
+            alert('Cep não encontrado');
+          }else{
+            //console.log(retorno)
+            if(typeof retorno.logradouro === 'string' ){
+
+              $('body').find('form input[name=endereco]').val(retorno.logradouro);
+            }
+
+            if(typeof retorno.uf === 'string' ){
+              
+              $('body').find('form input[name=estado]').val(retorno.uf);
+            }
+
+            if(typeof retorno.bairro === 'string' ){
+              
+              $('body').find('form input[name=bairro]').val(retorno.bairro);
+            }
+
+            if(typeof retorno.localidade === 'string' ){
+              
+              $('body').find('form input[name=cidade]').val(retorno.localidade);
+            }
+
+            $('body').find('form input[name=complemento]').val();
+
+          }
+
+        },
+        beforeSend: function()
+        {
+          $('div#msg-cep').remove();
+
+          let div = $('<div/>').attr('id', 'msg-cep').attr('align', 'center').addClass('row').append($('<div/>').addClass('col alert alert-warning').html('Aguarde: carregando endereco...'))
+          $('body').find('#myModal .modal-body').prepend(div)
+        }
+
+      });
+  }
+
   
 
+}
+
+
+class PessoaController extends BaseController
+{
+  constructor(){
+
+  }
+
+  static tugglePesson(tipo)
+  {
+    let parentSexo = $('form#adicionarCandidato #sexo').parent();
+      if(tipo == 'cpf'){
+
+        parentSexo.find($('label[for=ie]')).remove();
+        parentSexo.find($('input[name=ie]')).remove();
+
+        $('form#adicionarCandidato #sexo').show();
+        $('form#adicionarCandidato label[for=sexo]').show();
+
+        $('form#adicionarCandidato label[for=cpf]').html('CPF')
+        $('form#adicionarCandidato label[for=sobrenome]').html('Sobrenome')
+
+      }else{
+
+        $('form#adicionarCandidato #sexo').hide();
+        $('form#adicionarCandidato label[for=sexo]').hide();
+        parentSexo.append($('<label for="ie"/>').html('IE'))
+        parentSexo.append($('<input name="ie" id="ie" class="form-control form-control-sm"/>'))
+        $('form#adicionarCandidato label[for=cpf]').html('CNPJ')
+        $('form#adicionarCandidato label[for=sobrenome]').html('Nome fantasia')
+      }
+  }
 }
 
 
@@ -932,8 +1223,15 @@ class Candidato extends BaseModel
   }
 
   setTelefone(telefone){
-    if((!telefone) || (telefone.trim().length != 11)){
-      this.errors.push('Telefone deve ter 11 caracteres\n')
+    if((!telefone) || (telefone.trim().length != 15)){
+      this.errors.push('Telefone deve ter 15 caracteres\n')
+      return false;
+    }
+
+    telefone = Utilitarios.removeMask(telefone);
+    if(telefone === false){
+
+      this.errors.push('Telefone deve ter 15 caracteres\n')
       return false;
     }
 
@@ -956,6 +1254,7 @@ class Logradouro extends BaseModel{
 
     super();
 
+    this.cep;
     this.estado;
     this.cidade;
     this.bairro;
@@ -964,6 +1263,30 @@ class Logradouro extends BaseModel{
     this.tipo;
     this.numero;
     
+  }
+
+  setCep(cep){
+    cep = Utilitarios.removeMask(cep);
+
+    if((!cep) || (cep.trim().length != 8)){
+      this.errors.push('Informe um cep válido!')
+      return false;
+    }
+
+    this.cep = cep;
+
+    return true;
+  }
+
+  getCep(){
+    if((this.cep) && (this.cep.trim().length > 0)){
+      
+      return this.cep;
+    }
+
+    this.errors.push('Cep não definido')
+    return false;
+
   }
 
   setEstado(estado){
@@ -978,7 +1301,7 @@ class Logradouro extends BaseModel{
   }
 
   getEstado(){
-    if((this.estado) && (this.estado.length > 0)){
+    if((this.estado) && (this.estado.trim().length > 0)){
       
       return this.estado;
     }
@@ -1152,51 +1475,55 @@ class Logradouro extends BaseModel{
 class Utilitarios{
 
   static validaCpf(cpf){
-    cpf = cpf.replace(/[^\d]+/g, '');
+    cpf =  this.removeMask(cpf)
 
-        if(cpf.length != 11){
+    if(cpf === false){
+      return false;
+    }
 
-          return false;
-        }
-        
-        let splitCpf = cpf.split('');
+    if(cpf.length != 11){
 
-        let digitoUm = 0;
-        let digitoDois = 0;
+      return false;
+    }
+    
+    let splitCpf = cpf.split('');
 
-        
+    let digitoUm = 0;
+    let digitoDois = 0;
 
-        for (let i=0, x=1; !(i == 9 ); i++, x ++) { 
-             digitoUm += splitCpf[i] * x;
-        }
+    
 
-        
+    for (let i=0, x=1; !(i == 9 ); i++, x ++) { 
+         digitoUm += splitCpf[i] * x;
+    }
 
-        for (let i=0,  y=0; !(i == 10 ); i++, y ++) { 
+    
 
-            let invaliCpf = '';
+    for (let i=0,  y=0; !(i == 10 ); i++, y ++) { 
 
-            for (let j = 0; !(j == 11); j++) {
-              invaliCpf += i;
-            }
+        let invaliCpf = '';
 
-            if(invaliCpf == cpf){
-                return false;
-            }
-
-
-            digitoDois += splitCpf[i] * y;
+        for (let j = 0; !(j == 11); j++) {
+          invaliCpf += i;
         }
 
-        let calculoUm = ((digitoUm % 11) == 10) ? 0 : (digitoUm % 11);
-        let calculoDois = ((digitoDois % 11) == 10) ? 0 : (digitoDois % 11);
-
-        if((calculoUm != splitCpf[9]) || (calculoDois != splitCpf[10])){
-
+        if(invaliCpf == cpf){
             return false;
         }
 
-        return cpf;
+
+        digitoDois += splitCpf[i] * y;
+    }
+
+    let calculoUm = ((digitoUm % 11) == 10) ? 0 : (digitoUm % 11);
+    let calculoDois = ((digitoDois % 11) == 10) ? 0 : (digitoDois % 11);
+
+    if((calculoUm != splitCpf[9]) || (calculoDois != splitCpf[10])){
+
+        return false;
+    }
+
+    return cpf;
   }
 
   /**
@@ -1229,6 +1556,43 @@ class Utilitarios{
 
   }
 
+  static removeMask(data){
+
+    data = data.replace(/[^\d]+/g, '');
+    if(data.length > 0){
+      return data;
+    }
+
+    return false;
+  }
+
+  static formatMoney(amount, decimalCount = 2, decimal = ',', thousands = '.'){
+    try{
+
+      decimalCount = Math.abs(decimalCount);
+      decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+      const negativeSing = amount < 0 ? '-' : '';
+
+      let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+      let j = (i.length > 3) ? i.length % 3 : 0;
+
+      let fomartted = negativeSing;
+      fomartted += (j ? i.substr(0, j) + thousands : '');
+      fomartted += i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands);
+      fomartted += (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : '');
+
+      return fomartted;
+
+
+    }catch(e){
+
+      console.log(e);
+    }
+
+
+  }
+
 
   static getModal(titulo='Aguarde', body='', footer=''){
 
@@ -1256,4 +1620,28 @@ class Utilitarios{
   }
 
 
+}
+
+String.prototype.extenso = function(c){
+    var ex = [
+        ["zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"],
+        ["dez", "vinte", "trinta", "quarenta", "cinqüenta", "sessenta", "setenta", "oitenta", "noventa"],
+        ["cem", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"],
+        ["mil", "milhão", "bilhão", "trilhão", "quadrilhão", "quintilhão", "sextilhão", "setilhão", "octilhão", "nonilhão", "decilhão", "undecilhão", "dodecilhão", "tredecilhão", "quatrodecilhão", "quindecilhão", "sedecilhão", "septendecilhão", "octencilhão", "nonencilhão"]
+    ];
+    var a, n, v, i, n = this.replace(c ? /[^,\d]/g : /\D/g, "").split(","), e = " e ", $ = "real", d = "centavo", sl;
+    for(var f = n.length - 1, l, j = -1, r = [], s = [], t = ""; ++j <= f; s = []){
+        j && (n[j] = (("." + n[j]) * 1).toFixed(2).slice(2));
+        if(!(a = (v = n[j]).slice((l = v.length) % 3).match(/\d{3}/g), v = l % 3 ? [v.slice(0, l % 3)] : [], v = a ? v.concat(a) : v).length) continue;
+        for(a = -1, l = v.length; ++a < l; t = ""){
+            if(!(i = v[a] * 1)) continue;
+            i % 100 < 20 && (t += ex[0][i % 100]) ||
+            i % 100 + 1 && (t += ex[1][(i % 100 / 10 >> 0) - 1] + (i % 10 ? e + ex[0][i % 10] : ""));
+            s.push((i < 100 ? t : !(i % 100) ? ex[2][i == 100 ? 0 : i / 100 >> 0] : (ex[2][i / 100 >> 0] + e + t)) +
+            ((t = l - a - 2) > -1 ? " " + (i > 1 && t > 0 ? ex[3][t].replace("ão", "ões") : ex[3][t]) : ""));
+        }
+        a = ((sl = s.length) > 1 ? (a = s.pop(), s.join(" ") + e + a) : s.join("") || ((!j && (n[j + 1] * 1 > 0) || r.length) ? "" : ex[0][0]));
+        a && r.push(a + (c ? (" " + (v.join("") * 1 > 1 ? j ? d + "s" : (/0{6,}$/.test(n[0]) ? "de " : "") + $.replace("l", "is") : j ? d : $)) : ""));
+    }
+    return r.join(e);
 }

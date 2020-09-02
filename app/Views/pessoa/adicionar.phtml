@@ -3,6 +3,14 @@
 		<form class="col" method="post" action="/pessoa/salvar" id="adicionarCandidato">
 			<fieldset><legend class="h2">Dados pessoais</legend>
 				<div class="row">
+					<div class="col" align="right" id="tipo-pessoa">
+						<label for="fisica">Fisica</label>
+							<input type="radio" value="cpf" name="tipo_pessoa" id="fisica"class="mx-2" checked>
+							<label for="juridica">Jurídica</label>
+							<input type="radio" value="cnpj" name="tipo_pessoa" id="juridica"class="mx-2" >
+					</div>
+				</div>
+				<div class="row">
 					<div class="col">
 						<div class="form-group">
 							<label for="nome">Nome</label>
@@ -13,7 +21,7 @@
 							<input type="text" value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['sobrenome'])) ? Core\Utilitarios\Sessoes::loadForm()['sobrenome']: '' ?>" name="sobrenome" id="sobrenome"class="form-control form-control-sm" required="required">
 						</div>
 						<div class="form-group">
-							<label for="cpf">Cpf / Cnpj</label>
+							<label for="cpf">CPF</label>
 							<input type="text"  value="<?= ((Core\Utilitarios\Sessoes::loadForm() != false) && isset(Core\Utilitarios\Sessoes::loadForm()['cpf_cnpj'])) ? Core\Utilitarios\Sessoes::loadForm()['cpf_cnpj']: '' ?>" name="cpf_cnpj"id="cpf" class="form-control form-control-sm" required="required">
 						</div>
 					</div>
@@ -60,6 +68,7 @@
 							<table class="table table-md table-sm table-hover" id="table-logradouro">
 				              <thead>
 				                <tr>
+				                  <th>Cep</th>
 				                  <th>Estado</th>
 				                  <th>Cidade</th>
 				                  <th>Bairro</th>

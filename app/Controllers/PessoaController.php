@@ -107,12 +107,32 @@ class PessoaController extends BaseController
 
             $pessoa->setSobrenome($dados['sobrenome'] ?? '');
             $pessoa->setCpfCnpj($dados['cpf_cnpj'] ?? '');
-            //$pessoa->setRg($dados['rg'] ?? '');
+            //$pessoa->getRgIe($dados['rg'] ?? '');
             //$pessoa->setImg($dados['post'] ?? '');
             //$pessoa->setDtNascimento($dados['nascimento'] ?? '');
             $pessoa->setNome($dados['nome'] ?? '');
             $pessoa->setSobrenome($dados['sobrenome'] ?? '');
-            $pessoa->setSexo($dados['sexo'] ?? '');
+
+
+            if(! isset($dados['tipo'])){
+                throw new Exception("Erro na requisição, recarrege a pagina\n");
+                
+            }
+
+            /**
+             * Verifica o tipo de cadastro CPF ou CNPJ
+             */
+            if($dados['tipo_pessoa'] == 'cpf'){
+                
+                $pessoa->setSexo($dados['sexo'] ?? '');
+
+            }elseif($dados['tipo_pessoa'] == 'cnpj'){
+
+                //$pessoa->setSexo('n');
+                $pessoa->getRgIe($dados['ie'] ?? '');
+                $pessoa->setTipo('cnpj');
+            }
+
 
             if(isset($dados['email']) && (strlen($dados['email']) > 0)){
 
@@ -187,6 +207,7 @@ class PessoaController extends BaseController
             $sentinela = false;
             for ($i=0; !($i == count($dados['cidade']) ); $i++) { 
 
+                $cep         = $dados['cep'][$i];
                 $cidade         = $dados['cidade'][$i];
                 $estado         = $dados['estado'][$i];
                 $bairro         = $dados['bairro'][$i];
@@ -200,7 +221,7 @@ class PessoaController extends BaseController
                 */
 
                 if(
-                    (strlen($cidade) > 0) && (strlen($estado) > 0) && (strlen($bairro) > 0) &&
+                    (strlen($cidade) > 0) && (strlen($cep) > 0) && (strlen($estado) > 0) && (strlen($bairro) > 0) &&
                     (strlen($endereco) > 0) && (strlen($complemento) > 0) && (strlen($numero) > 0)
                     && (strlen($tipo) > 0) 
                 ){
@@ -208,6 +229,7 @@ class PessoaController extends BaseController
                     $logradouro = new Logradouro();
 
                     $logradouro->setCidade($cidade);
+                    $logradouro->setCep($cep);
                     $logradouro->setEstado($estado);
                     $logradouro->setBairro($bairro);
                     $logradouro->setEndereco($endereco);

@@ -147,8 +147,16 @@
 	          <div class="row">
 	              <div class="col">
 	                <div class="form-group">
-	                  <label for="estado">Sigla do estado</label>
-	                  <input value="<?=$this->view->dados[0]->logradouro()[0]->getEstado();?>" type="text" name="estado" id="estado"class="form-control form-control-sm" required="required">
+	                  <div class="row">
+	                  	<div class="col">
+	                  		<label for="cep">Cep</label>
+	                  		<input value="<?=$this->view->dados[0]->logradouro()[0]->getCep();?>" type="text" name="cep" id="cep"class="form-control form-control-sm" required="required">
+	                  	</div>
+	                  	<div class="col">
+	                  		<label for="estado">Sigla do estado</label>
+	                  		<input value="<?=$this->view->dados[0]->logradouro()[0]->getEstado();?>" type="text" name="estado" id="estado"class="form-control form-control-sm" required="required">
+	                  	</div>
+	                  </div>
 	                </div>
 	                <div class="form-group">
 	                  <label for="cidade">Cidade</label>

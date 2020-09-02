@@ -30,7 +30,7 @@
 				        <a class="nav-link link-option desable-link alert alert-primary" id="pessoal" href="/pessoa/painel?cd=<?=$this->view->dados[0]->getIdPessoa();?>">Pessoais</a>
 				    </li>
 				    <li class="nav-item mr-1">
-				        <a class="nav-link link-option desable-link alert alert-primary" id="formacao" href="/logradouro/index?cd=<?=$this->view->dados[0]->getIdPessoa();?>">Logradouro</a>
+				        <a class="nav-link link-option desable-link alert alert-primary" id="logradouro" href="/logradouro/index?cd=<?=$this->view->dados[0]->getIdPessoa();?>">Logradouro</a>
 				    </li>
 				</ul>
 			</div>
@@ -47,6 +47,7 @@
 				<table class="table table-md table-sm table-hover" id="table-logradouro">
 	              <thead>
 	                <tr>
+	                  <th>Cep</th>
 	                  <th>Estado</th>
 	                  <th>Cidade</th>
 	                  <th>Bairro</th>
@@ -66,6 +67,10 @@
 
 	              	?>
 	              	<tr>
+	              		<td>
+	              			<?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getCep(): '' ?>
+	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getCep()?>">
+	              		</td>
 	              		<td><?=($logradPess[$i]->logradouro() != false) ? $logradPess[$i]->logradouro()[0]->getEstado(): '' ?>
 	              			<input type="hidden" name="" value="<?=$logradPess[$i]->logradouro()[0]->getEstado()?>">
 	              		</td>

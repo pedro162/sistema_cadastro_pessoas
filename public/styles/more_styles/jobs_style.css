@@ -72,6 +72,7 @@ div.carousel-inner .carousel-item img{
 	width: 40%; margin: auto;
 }
 
+
 @media(max-width: 600px){
 	*{
 		box-sizing: border-box;
@@ -124,4 +125,13 @@ div.carousel-inner .carousel-item img{
 
 
 /* ---------------------------------- ESTILOS DO EMPRESA ----------------*/
+}
+
+
+
+@media print{
+	form#recibo div.form-group, footer, header, div#section-response{
+		display: none;
+	}
+
 }

@@ -7,6 +7,7 @@ use App\Models\Chate;
 use App\Models\ConversaChate;
 use App\Models\Experiencia;
 use App\Models\Curso;
+use \Core\Utilitarios\Utils;
 use \Exception;
 use \InvalidArgumentException;
 
@@ -26,6 +27,7 @@ class Pessoa extends BaseModel
     private $dtRegistro;
     private $idUsuario;
     private $email;
+    private $tipo;
     private $status;
 
     protected function parseCommit()
@@ -190,6 +192,39 @@ class Pessoa extends BaseModel
 
     }
 
+    public function getTipo()
+    {
+        if((! isset($this->data['tipo'])) || (strlen($this->data['tipo'] == 0))){
+            if(isset($this->tipo) && (strlen($this->tipo) > 0)){
+                return $this->tipo;
+            }
+
+            throw new Exception("Propriedade não definida\n");
+        }
+
+        return $this->data['tipo'];
+    }
+
+    public function setTipo(String $tipo)
+    {
+        if((! isset($tipo)) || (strlen(trim($tipo))  == 0)){
+
+            $this->setErrors("Tipo inválido\n");
+            return false;
+        }
+
+        if(($tipo != 'cpf') && ($tipo != 'cnpj')){
+
+            $this->setErrors("Tipo inválido\n");
+            return false;
+        }
+
+        $this->data['tipo'] = $tipo;
+
+        return true;
+
+    }
+
     public function getEmail()
     {
         if((! isset($this->data['email'])) || (strlen($this->data['email'] == 0))){
@@ -269,6 +304,24 @@ class Pessoa extends BaseModel
             return false;
         }
 
+        if((strlen(trim($cpfCnpj)) != 14) && (strlen(trim($cpfCnpj)) != 11 ) ){
+            $this->setErrors("Documento inválido\n");
+            return false;
+        }
+
+        if(strlen(trim($cpfCnpj)) == 11 ){
+
+            $cpfCnpj = Utils::clearMask($cpfCnpj);
+            $cpfCnpj = Utils::validaCpf($cpfCnpj);
+
+            if($cpfCnpj == false){
+                
+                $this->setErrors("Documento inválido\n");
+                return false;
+            }
+
+        }
+        
         $this->data['cpfCnpj'] = $cpfCnpj;
 
         return true;

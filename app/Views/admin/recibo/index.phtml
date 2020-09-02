@@ -1,0 +1,84 @@
+<div class="row px-5" style="float: right;">
+	<nav class="navbar navbar-expand-lg">
+		<ul class="navbar-nav mr-auto" >
+			<li class="nav-item mr-1 ">
+				<a class="nav-link link-option alert alert-white" href="/" id="pessoal">Inicio</a>
+			</li>
+			<li class="nav-item mr-1 ">
+				<a class="nav-link link-option alert alert-primary" id="print">Recibo</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+<div class="row py-2 px-5" style="clear: both;" id="container-recibo">
+	<div class="col">
+		<div class="row">
+			<form class="col" action="#" id="recibo">
+				<div class="row">
+					<div class="col" align="right">
+						<div class="form-group">
+							<label for="recibo-cpf">CPF:</label>
+							<input type="radio" checked="checked" name="tipo-documento" id='recibo-cpf' value="cpf" class="">
+							<label for="recibo-cnpj" >CNPJ:</label>
+							<input type="radio"  value="cpnj" id='recibo-cnpj' name="tipo-documento" class="">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-group">
+							<label for="recibo-pessoa">Pessoa:</label>
+							<input type="text" name="pessoa" id="recibo-pessoa" class="form-control form-control-sm">
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-group">
+							<label for="recibo-documento">Documento:</label>
+							<input type="text" name="documento" id="recibo-documento" class="form-control form-control-sm">
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-group">
+							<label for="recibo-valor">Valor:</label>
+							<input type="text" name="valor" id="recibo-valor" class="form-control form-control-sm">
+						</div>
+					</div>
+				</div>
+				<div class="row mb-5">
+					<div class="col">
+						<div class="form-group">
+							<label>Referencia:</label>
+							<input type="text" name="referencia" class="form-control form-control-sm">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" align="left">
+						<img src="files/imagens/img_site/logo_cafe.jpeg" width="100">
+						<p ><strong>Café e Cia</strong><br>
+							CNPJ: 112345678912345 <br>
+							Av: Nova Aurora nº 20 <br>
+							São Luis (MA) 65061220 <br>
+							Fone: (98) 932461613
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<p style="text-align: justify;" class="body-recibo">
+							<strong><span id="nome-pessoa-recebedor">José pedor Aguiar Ferreria</span></strong> portador do <span id="label-doc-recebedor">CPF</span> nº <span id="doc-pessoa-recebedor">61224450759</span>, declaro ter recebido a importância de <strong>R$ <span id="valor-ref">1.700,00</span> (<span id="vl-extenso">um mil setecentos </span> reais) de <span id="nome-pessoa-pagador">Café e Cia</span></strong> de <span id="label-doc-pagador">CNPJ </span> nº <span id="doc-pessoa-pagador">12345678945612</span>, referente  <span id="referencia">ao pagamento de salário do mês de janeiro</span>
+						</p>
+						<br>
+						<br>
+						<p align="center" class="body-recibo">São Luís (MA) <?=$this->view->data;?></p>
+						<br>
+						<p style=" text-align: center;" class="body-recibo"><span id="nome-pessoa-assina" style="text-decoration: overline; text-align: center;">José Pedro Aguiar Ferreira</span></p>
+					</div>
+				</div>
+				<div class="row">
+					<button class="btn btn-sm">print</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

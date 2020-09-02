@@ -10,6 +10,7 @@ use App\Models\Logradouro;
 use App\Models\PessoaLogradouro;
 use \App\Models\Usuario;
 use \Core\Utilitarios\Utils;
+use \Core\Utilitarios\LoadEnderecoApi;
 use Core\Utilitarios\Sessoes;
 use \Exception;
 
@@ -112,6 +113,7 @@ class LogradouroController extends BaseController
 
             $logradouro = new Logradouro();
 
+            $logradouro->setCep($dados['cep']);
             $logradouro->setCidade($dados['cidade']);
 			$logradouro->setEstado($dados['estado']);
 			$logradouro->setBairro($dados['bairro']);
@@ -560,6 +562,41 @@ class LogradouroController extends BaseController
              * Redireciona o candidato de volta ao formulario
              */
             header('Location:/logradouro/index?cd='.(int) $idLogradouro.'&ps='.(int) $idPessoa);
+        }
+    }
+
+    public function loadCep($request)
+    {
+        try {
+
+            //busca o usuario logado
+            $usuario = Sessoes::usuarioLoad();
+            if($usuario == false){
+                header('Location:/home/init');
+                
+            }
+
+            
+            Transaction::startTransaction('connection');
+
+            $cepApi = new LoadEnderecoApi($request['post']['cep']);
+            $resultCepApi = $cepApi->getEndereco();
+
+            $this->view->result = json_encode($resultCepApi);
+            $this->render('logradouro/ajax', false);
+
+            Transaction::close();
+            
+        }catch (\PDOException $e) {
+
+            Transaction::rollback();
+
+        } catch (Exception $e) {
+            Transaction::rollback();
+
+            $erro = ['msg','warning', $e->getMessage()];
+            $this->view->result = json_encode($erro);
+            $this->render('logradouro/ajax', false);
         }
     }
 
